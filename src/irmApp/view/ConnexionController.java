@@ -88,10 +88,6 @@ public class ConnexionController implements Initializable{
         //Scene scene = (Scene) ((Node) event.getSource()).getScene();
         //scene.setRoot(root);
         
-        Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-        Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        scene.setRoot(root);
-        
         //dialogStage.close();
         //String requeteVerifLog = "select * from Medecin where login = "+login+" and pwd = "+pwd+";";
         //try{

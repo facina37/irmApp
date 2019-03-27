@@ -63,10 +63,6 @@ public class AjoutExamenController implements Initializable {
     @FXML
     private TextField naa_cr;
     
-    //Partie dialogue
-    private Stage dialogStage;
-    private boolean okClicked = false;
-    private MainApp mainapp;
     
     
     ConnexionOracle maconnection = new ConnexionOracle();
@@ -92,10 +88,6 @@ public class AjoutExamenController implements Initializable {
         cho_cr.setPromptText("Cho/Cr");
         lip_cr.setPromptText("Lip/Cr");
         naa_cr.setPromptText("NAA/Cr");
-    }
-    
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
     }
     
     private boolean isInputExamenValid() {
@@ -151,7 +143,7 @@ public class AjoutExamenController implements Initializable {
         } else {
             // Show the error message.
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage);
+            alert.initOwner(null);
             alert.setTitle("Attention !");
             alert.setHeaderText("Veuillez corriger.");
             alert.setContentText(errorMessage);
@@ -165,9 +157,9 @@ public class AjoutExamenController implements Initializable {
     @FXML
     private void handleAjoutExamen(ActionEvent event) throws IOException {
         if (isInputExamenValid()) {
-            String requeteAjout = "Insert into Examen (idMachine, idPatient, idMedecin, dateExam,"
+            /*String requeteAjout = "Insert into Examen (idMachine, idPatient, idMedecin, dateExam,"
                    + " volCrane, valMaxAxeCrane, volTumeur, Cho_Cr, Naa_Cr, Naa_Cho, lip_cr, mtt,"
-                   + " ttp, rcbv, rcbf, lac) values ("+idMachine+","+mainapp.getPatient().getId()+","+idMedecin+","
+                   + " ttp, rcbv, rcbf, lac) values ("+idMachine+","+idPatient().getId()+","+idMedecin+","
                    + dateExamen+","+volCrane+","+axeCrane+","+volTumeur+","+cho_cr+","+naa_cr+","
                    + naa_cho+","+lip_cr+","+mtt+","+ttp+","+rcbv+","+rcbf+","+lac+");";
             try{
@@ -184,9 +176,7 @@ public class AjoutExamenController implements Initializable {
             catch(SQLException e){
                 System.out.println(e);
                 System.out.println("Non enregistré");
-            }
-            okClicked = true;
-            dialogStage.close();
+            }*/
         }
     }        
 }

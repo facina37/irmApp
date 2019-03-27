@@ -130,7 +130,7 @@ public class AccueilMedecinController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }
-        data.add(new Patient(1,1,"uvjb","iugig",45,false,true,'H',2));
+        data.add(new Patient(1,1,"Jean-Pierre","Durand",45,false,true,'H',2));
         return data;
     }
     
@@ -165,7 +165,7 @@ public class AccueilMedecinController implements Initializable {
         }
         
         //debut test
-        patient = new Patient(1,1,"uvjb","iugig",45,false,true,'H',2);
+        patient = new Patient(1,1,"Durand","Jean-Pierre",45,false,true,'H',2);
         if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText()))
         {
             data.add(patient);
@@ -228,7 +228,7 @@ public class AccueilMedecinController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }        
-        data.add(new Examen(1,new Date(2019-05-02),"uvjb","iugig"));
+        data.add(new Examen(1,new Date(2018-05-02),"Jean-Pierre","Durand"));
         return data;
     }
     

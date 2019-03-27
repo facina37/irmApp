@@ -1,7 +1,9 @@
 package irmApp.view;
 
+import irmApp.database.ConnexionOracle;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * La classe AjoutVisite Controller permet de gerer l'ajout des informations 
@@ -60,10 +63,10 @@ public class AjoutVisiteController implements Initializable {
     @FXML
     private TextArea raisonPrise;
     
-    //Partie dialogue
-    private Stage dialogStage;
-    private boolean okVisite;
-    private boolean okMedicament;
+    private int visiteActuelle = -1;
+    
+    ConnexionOracle maconnection = new ConnexionOracle();
+    Statement stmt; //créer une variable de la requête
     
     /**
      * Initialise le controller.
@@ -95,37 +98,80 @@ public class AjoutVisiteController implements Initializable {
     }    
     
     @FXML
-    private void handleAjoutPrevisite(ActionEvent event) {
+    private void handleAjoutPrevisite(ActionEvent event) throws IOException {
         if (isInputVisiteValid()) {
-            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
-            okVisite = true;
+            /*String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
+                   + " nomLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+idPatient+","+idMedecin+","+dateVisite+","
+                   + numLot+","+poids+","+freqCardiaque+","+tension+","+leucocytes+","+hemoglobine+");";
+            try{
+                stmt = maconnection.ObtenirConnection().createStatement();
+                stmt.executeQuery(requeteAjout);
+                //petit pop up
+                JOptionPane.showMessageDialog(null, "Enregistré avec succès");
+                System.out.println("Enregistré");
+                //Revenir à la page d'accueil technicien
+                Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                scene.setRoot(root);
+            }
+            catch(SQLException e){
+                System.out.println(e);
+                System.out.println("Non enregistré");
+                messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
+            }*/
+            
+
             dateVisite.setDisable(true);
             poids.setDisable(true);
             numLot.setDisable(true);
             freqCardiaque.setDisable(true);     
-            typeLot.setDisable(true);
             typeLot.setDisable(true);
             tension.setDisable(true);
             leucocytes.setDisable(true);
             hemoglobine.setDisable(true);
             idMedecin.setDisable(true);
             ajoutVisite.setDisable(true);
-            //dialogStage.close();
         }
-    }  
+    } 
     
     
     @FXML
     private void handleAjoutMedicament(ActionEvent event) {
         if(ajoutVisite.isDisable() == true){
             if (isInputMedicamentValid()) {
+                //verifie si il y a deja un medoc avec le mm nom
+                String requeteVerif = "select * into Medicament";
+                try{
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    ResultSet result = stmt.executeQuery(requeteVerif);
+                    boolean dejaExistant = false;
+                    while(result.next()){
+                        //WARNING a changer
+                        if(result.getString("nommedic") == medicament.getText())
+                        {
+                            dejaExistant = true;
+                        }
+                    }
+                    System.out.println("Enregistré");
+                    
+                    if(dejaExistant)
+                    {
+                        String AjoutMedoc = "insert into Medicament values (1, "+medicament.getText()+");";
+                        stmt.executeQuery(AjoutMedoc);
+                    }
+                }
+                catch(SQLException e){
+                    System.out.println(e);
+                    System.out.println("Non enregistré");
+                    messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
+                }
+                
+                //WARNING il faut faire une entree dans la table ingerer
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
-                okMedicament = true;
-                //dialogStage.close();
             }
-        }
-        else {
-            messageSucces.setText("Vous devez ajouter une prévisite auparavant");
+            else {
+                messageSucces.setText("Vous devez ajouter une prévisite auparavant");
+            }
         }
     }
     
@@ -160,6 +206,7 @@ public class AjoutVisiteController implements Initializable {
         if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0) {
             errorMessage += "Fréquence cardiaque invalide !\n";
         }
+        //WARNING a changer
         if (typeLot.getValue() != "DiOrZen" && typeLot.getValue() != "Placebo") {
             errorMessage += "Type de lot invalide !\n";
         }
@@ -180,7 +227,7 @@ public class AjoutVisiteController implements Initializable {
         } else {
             // Show the error message.
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage);
+            alert.initOwner(null);
             alert.setTitle("Attention !");
             alert.setHeaderText("Veuillez corriger.");
             alert.setContentText(errorMessage);
@@ -205,7 +252,7 @@ public class AjoutVisiteController implements Initializable {
         } else {
             // Show the error message.
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage);
+            alert.initOwner(null);
             alert.setTitle("Attention!");
             alert.setHeaderText("Veuillez corriger.");
             alert.setContentText(errorMessage);

@@ -32,7 +32,7 @@ Author : Bidois, Andreo, Baudoin
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label fx:id="message" layoutX="365.0" layoutY="489.0" prefHeight="34.0" prefWidth="45.0" text="Label" textFill="#ff0606">
+      <Label fx:id="message" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="488.0" prefHeight="34.0" prefWidth="468.0" text="Label" textAlignment="CENTER" textFill="#ff0606">
          <font>
             <Font size="14.0" />
          </font></Label>

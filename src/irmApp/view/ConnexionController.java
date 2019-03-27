@@ -65,9 +65,24 @@ public class ConnexionController implements Initializable{
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException {
         
-        Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
-        Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        scene.setRoot(root);
+        //seulement pour la version de demonstration
+        String pseudo  = login.getText();
+        if(pseudo.equals("medecin"))
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
+            Scene scene = (Scene) ((Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        }
+        else if(pseudo.equals("technicien"))
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
+            Scene scene = (Scene) ((Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        }
+        else
+        {
+            message.setText("Informations incorrectes, veuillez réessayer");
+        }
         
         //Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
         //Scene scene = (Scene) ((Node) event.getSource()).getScene();

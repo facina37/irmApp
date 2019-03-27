@@ -7,8 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.Pane;
 
 /*App IRM Care BDD IHM
  * Version : 23/03/2019
@@ -17,9 +15,7 @@ import javafx.scene.layout.Pane;
 public class MainApp extends Application {
     
     private Stage primaryStage;
-    private AnchorPane root, pageConnexion;
-    private TabPane pageMedecin, pageTechnicien;
-    private Pane pageVisite;
+    private AnchorPane root;
     private Patient patient;
        
      @Override

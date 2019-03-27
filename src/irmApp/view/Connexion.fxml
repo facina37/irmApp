@@ -6,6 +6,7 @@ Version : 07/03/2019
 Author : Bidois, Andreo, Baudoin
 -->
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -23,18 +24,30 @@ Author : Bidois, Andreo, Baudoin
 
 <AnchorPane id="AnchorPane" prefHeight="558.0" prefWidth="775.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.ConnexionController">
    <children>
-      <Button layoutX="393.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleConnexion" text="Connexion" AnchorPane.bottomAnchor="206.0" />
-      <Button layoutX="310.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
-      <Label fx:id="message" layoutX="362.0" layoutY="371.0" prefHeight="34.0" prefWidth="45.0" text="Label" textFill="#ff0606">
+      <Button layoutX="396.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleConnexion" text="Connexion" AnchorPane.bottomAnchor="155.0">
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button layoutX="290.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleReset" text="Annuler">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label fx:id="message" layoutX="365.0" layoutY="489.0" prefHeight="34.0" prefWidth="45.0" text="Label" textFill="#ff0606">
+         <font>
+            <Font size="14.0" />
          </font></Label>
-      <Label layoutX="333.0" layoutY="131.0" text="Connectez-vous">
+      <Label layoutX="272.0" layoutY="68.0" text="Connectez-vous">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="31.0" />
          </font>
       </Label>
-      <TextField fx:id="login" layoutX="310.0" layoutY="202.0" maxWidth="-Infinity" />
-      <PasswordField fx:id="pwd" layoutX="310.0" layoutY="254.0" maxWidth="-Infinity" />
+      <TextField fx:id="login" layoutX="289.0" layoutY="201.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="198.0">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <PasswordField fx:id="pwd" layoutX="289.0" layoutY="283.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="198.0">
+         <font>
+            <Font size="14.0" />
+         </font></PasswordField>
    </children>   
 </AnchorPane>

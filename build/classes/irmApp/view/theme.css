@@ -25,15 +25,7 @@ bleu très pale : #E0F2F4
     -fx-background-position: center center;
     -fx-font-family: sans-serif;    
 }
-.label {
-    -fx-font-size: 11pt;
-    
-}
 
-.labelForm {
-    -fx-font-size: 12pt;
-    
-}
 .label-bright {
     -fx-font-size: 20pt;
    

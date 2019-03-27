@@ -30,10 +30,6 @@ public class VerifExamenController implements Initializable{
     @FXML
     private Label risqueTotal;
     @FXML
-    private Label risqueMeta;
-    @FXML
-    private Label risquePerfu;
-    @FXML
     private Label volCrane;
     @FXML
     private Label axeCrane;

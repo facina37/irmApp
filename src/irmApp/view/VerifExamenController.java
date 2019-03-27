@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package irmApp.view;
 
-import irmApp.database.ConnexionOracle;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import irmApp.database.ConnexionOracle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -75,14 +71,17 @@ public class VerifExamenController implements Initializable{
     private int idPatient;
     private Stage dialogStage;
     
-    ConnexionOracle maconnection = new ConnexionOracle();
-    Statement stmt; //créer une variable de la requête
+    private ConnexionOracle maconnection = new ConnexionOracle();
+    private Statement stmt; //créer une variable de la requête
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ObservableList<String> data = FXCollections.observableArrayList("I","II","III","IV");
+        grade.setPromptText("Faites votre vhoix");
+        grade.setItems(data);
         recuperationInfos();
         gestionErreurs();
     }

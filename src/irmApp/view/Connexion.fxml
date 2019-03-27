@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Student App IHM Gphy
+Version : 07/03/2019
+Author : Bidois, Andreo, Baudoin
+-->
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="558.0" prefWidth="775.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.ConnexionController">
+   <children>
+      <Button layoutX="393.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleConnexion" text="Connexion" AnchorPane.bottomAnchor="206.0" />
+      <Button layoutX="310.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
+      <Label fx:id="message" layoutX="362.0" layoutY="371.0" prefHeight="34.0" prefWidth="45.0" text="Label" textFill="#ff0606">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label layoutX="333.0" layoutY="131.0" text="Connectez-vous">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="login" layoutX="310.0" layoutY="202.0" maxWidth="-Infinity" />
+      <PasswordField fx:id="pwd" layoutX="310.0" layoutY="254.0" maxWidth="-Infinity" />
+   </children>   
+</AnchorPane>

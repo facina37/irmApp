@@ -1,0 +1,52 @@
+/*
+Css for ihm student app
+
+    Created on : 2 mars 2019, 16:52:42
+    Author     : hugo
+
+*/
+
+/*
+theme:
+rose : #F5E4D4
+bleu pale : #A8CCE4
+gris marron : #C4B6AD
+bleu foncé : #004274
+bleu tres foncé : #00264A
+bleu très pale : #E0F2F4
+
+*/
+
+.root {
+     -fx-background-image: url("bg.png");
+     -fx-background-repeat: stretch;   
+    /*-fx-background-size: 900 600;*/
+    -fx-background-size:cover;
+    -fx-background-position: center center;
+    -fx-font-family: sans-serif;    
+}
+.label {
+    -fx-font-size: 11pt;
+    
+}
+
+.labelForm {
+    -fx-font-size: 12pt;
+    
+}
+.label-bright {
+    -fx-font-size: 20pt;
+   
+    
+}
+.label-header {
+    -fx-font-size: 19pt;
+    
+}
+.table-view{
+    -fx-opacity: 0.9;
+}
+
+.table-row-cell {
+   -fx-font-size: 11pt;
+}

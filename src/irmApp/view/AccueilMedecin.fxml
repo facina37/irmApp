@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="775.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilMedecinController">
+  <tabs>
+    <Tab text="Ajout prévisite">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0">
+                    <columns>
+                      <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="groupeColumn" prefWidth="75.0" text="Groupe" />
+                        <TableColumn fx:id="lastNameColumn" prefWidth="189.0" text="Nom" />
+                        <TableColumn fx:id="firstNameColumn" prefWidth="131.0" text="Prénom" />
+                        <TableColumn fx:id="ageColumn" prefWidth="70.0" text="Age" />
+                        <TableColumn fx:id="statutColumn" prefWidth="62.0" text="Statut" />
+                        <TableColumn fx:id="sexeColumn" prefWidth="63.0" text="Sexe" />
+                        <TableColumn fx:id="gradeColumn" prefWidth="54.0" text="Grade" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="30.0" layoutY="13.0" text="Liste des patients">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" />
+                  <Button layoutX="325.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" />
+                  <TextField fx:id="motclePatient" layoutX="525.0" layoutY="14.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Vérification examens">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="36.0" layoutY="14.0" text="Liste des examens à vérifier">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="343.0" layoutY="478.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" />
+                  <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0">
+                    <columns>
+                      <TableColumn fx:id="idExamColumn" prefWidth="75.0" text="ID examen" />
+                      <TableColumn fx:id="dateColumn" prefWidth="87.0" text="Date" />
+                        <TableColumn fx:id="nomColumn" prefWidth="263.0" text="Nom du patient" />
+                        <TableColumn fx:id="prenomColumn" prefWidth="274.0" text="Prénom du patient" />
+                    </columns>
+                  </TableView>
+                  <Button layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" />
+                  <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Tableau de bord">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Aide">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

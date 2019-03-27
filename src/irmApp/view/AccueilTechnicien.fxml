@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="775.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
+  <tabs>
+    <Tab text="Patients">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0">
+                    <columns>
+                      <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
+                      <TableColumn fx:id="groupeColumn" prefWidth="74.0" text="Groupe" />
+                      <TableColumn fx:id="lastNameColumn" prefWidth="135.0" text="Nom" />
+                      <TableColumn fx:id="firstNameColumn" prefWidth="165.0" text="Prénom" />
+                      <TableColumn fx:id="ageColumn" prefWidth="79.0" text="Age" />
+                      <TableColumn fx:id="statutColumn" prefWidth="89.0" text="Statut" />
+                      <TableColumn fx:id="sexeColumn" prefWidth="62.0" text="Sexe" />
+                      <TableColumn fx:id="gradeColumn" prefWidth="67.0" text="Grade" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="28.0" layoutY="15.0" text="Liste des patients">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" />
+                  <Button layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" />
+                  <Button layoutX="339.0" layoutY="478.0" mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter un IRM" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Aide">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

@@ -37,61 +37,110 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Examen du... de..." GridPane.columnSpan="2">
+      <Label text="Examen de Jean-Pierre Durand le 18/08/2018" GridPane.columnSpan="2">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label text="Machine" GridPane.rowIndex="2">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <Label GridPane.rowIndex="6" />
       <Label text="Volumes" GridPane.rowIndex="7">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="volCrane" text="Volume crânien :" GridPane.rowIndex="8" />
-      <Label fx:id="axeCrane" text="Volume max. axe crânien :" GridPane.rowIndex="10" />
-      <Label fx:id="volTumeur" text="Volume tumeur :" GridPane.rowIndex="12" />
-      <Label fx:id="gradeMachine" text="Grade Machine :" GridPane.rowIndex="3" />
-      <Label fx:id="risqueTotal" text="Risque total :" GridPane.rowIndex="4" />
-      <Label fx:id="risquePerfu" text="Risque perfusionnel :" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label fx:id="risqueMeta" text="Risque métabolique :" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="volCrane" text="Volume crânien :" GridPane.rowIndex="8">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="axeCrane" text="Volume max. axe crânien :" GridPane.rowIndex="10">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="volTumeur" text="Volume tumeur :" GridPane.rowIndex="12">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="gradeMachine" text="Grade Machine :" GridPane.rowIndex="3">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="risqueTotal" text="Risque total :" GridPane.rowIndex="4">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
       <Label text="Examen" GridPane.rowIndex="6">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <Label text="Imagerie métabolique" GridPane.columnIndex="2" GridPane.rowIndex="7">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label text="Imagerie de perfusion" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="mtt" text="MTT :" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <Label fx:id="cho_cr" text="Cho / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-      <Label fx:id="ttp" text="TTP :" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <Label fx:id="naa_cr" text="NAA / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-      <Label fx:id="rcbv" text="rCBV :" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <Label fx:id="naa_cho" text="NAA / Cho :" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-      <Label fx:id="rcbf" text="rCBF :" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <Label fx:id="lac" text="Lac :" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-      <Label fx:id="lip_cr" prefHeight="17.0" prefWidth="50.0" text="Lip / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+      <Label fx:id="mtt" text="MTT :" GridPane.columnIndex="1" GridPane.rowIndex="8">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="cho_cr" text="Cho / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="8">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="ttp" text="TTP :" GridPane.columnIndex="1" GridPane.rowIndex="9">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="naa_cr" text="NAA / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="9">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="rcbv" text="rCBV :" GridPane.columnIndex="1" GridPane.rowIndex="10">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="naa_cho" text="NAA / Cho :" GridPane.columnIndex="2" GridPane.rowIndex="10">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="rcbf" text="rCBF :" GridPane.columnIndex="1" GridPane.rowIndex="11">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="lac" text="Lac :" GridPane.columnIndex="2" GridPane.rowIndex="11">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label fx:id="lip_cr" prefHeight="17.0" prefWidth="50.0" text="Lip / Cr :" GridPane.columnIndex="2" GridPane.rowIndex="12">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
       <Label text="Erreur(s)" GridPane.rowIndex="14">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="messageErreur" text="erreur" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-      <RadioButton fx:id="suppression" mnemonicParsing="false" prefHeight="17.0" prefWidth="271.0" text="Suppression des données du dernier examen" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
-      <RadioButton fx:id="refaire" mnemonicParsing="false" text="Refaire un examen dans 2 jours" GridPane.columnSpan="2" GridPane.rowIndex="16" />
+      <Label fx:id="messageErreur" text="erreur" GridPane.columnSpan="2" GridPane.rowIndex="15">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <RadioButton fx:id="suppression" mnemonicParsing="false" prefHeight="19.0" prefWidth="289.0" text="Suppression des données du dernier examen" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="16">
+         <font>
+            <Font size="13.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="refaire" mnemonicParsing="false" text="Refaire un examen dans 2 jours" GridPane.columnSpan="2" GridPane.rowIndex="16">
+         <font>
+            <Font size="13.0" />
+         </font></RadioButton>
       <Button fx:id="valideErreur" mnemonicParsing="false" onAction="#handleValideErreur" text="Valider" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="16">
          <font>
             <Font size="14.0" />

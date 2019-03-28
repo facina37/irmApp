@@ -102,7 +102,7 @@ public class AjoutVisiteController implements Initializable {
     @FXML
     private void handleAjoutPrevisite(ActionEvent event) throws IOException {
         if (isInputVisiteValid()) {
-            AjoutPrevisite(event);
+            //AjoutPrevisite(event);
             messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
 
             dateVisite.setDisable(true);
@@ -146,17 +146,17 @@ public class AjoutVisiteController implements Initializable {
         if(ajoutVisite.isDisable() == true){
             if (isInputMedicamentValid()) {
                 
-                int idMedicament;
-                int idPrevisite;
+                //int idMedicament;
+                //int idPrevisite;
                 
-                idPrevisite = recupIdPrevisite();
-                ajoutMedicament();
+                //idPrevisite = recupIdPrevisite();
+                //ajoutMedicament();
                 
-                idMedicament = recupIdMedicament();
-                if(idMedicament != -1 && idPrevisite != -1)
-                {
-                    ajoutIngerer(idMedicament, idPrevisite);
-                }
+                //idMedicament = recupIdMedicament();
+                //if(idMedicament != -1 && idPrevisite != -1)
+                //{
+                    //ajoutIngerer(idMedicament, idPrevisite);
+                //}
                  
                 //Message juste pour la version demo
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
@@ -259,13 +259,13 @@ public class AjoutVisiteController implements Initializable {
         if (dateVisite.getValue() == null) {
             errorMessage += "Date invalide !\n";
         } 
-        if (poids.getText() == null || poids.getText().length() == 0) {
+        if (poids.getText() == null || poids.getText().length() == 0 || !isNumber(poids.getText())){
             errorMessage += "Poids invalide !\n";
         }
-        if (numLot.getText() == null || numLot.getText().length() == 0) {
+        if (numLot.getText() == null || numLot.getText().length() == 0 || !isNumber(numLot.getText())) {
             errorMessage += "Numéro de lot invalide !\n";
         }
-        if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0) {
+        if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0 || !isNumber(freqCardiaque.getText())) {
             errorMessage += "Fréquence cardiaque invalide !\n";
         }
         if(typeLot.getValue() == null)
@@ -296,6 +296,19 @@ public class AjoutVisiteController implements Initializable {
             alert.setContentText(errorMessage);
 
             alert.showAndWait();
+            return false;
+        }
+    }
+    
+    //renvoie True si le String envoyé peut bien être converti en nombre
+    public boolean isNumber(String str)
+    {
+        try {
+            Float.parseFloat(str);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
             return false;
         }
     }

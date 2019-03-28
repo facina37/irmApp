@@ -136,8 +136,7 @@ public class AjoutVisiteController implements Initializable {
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("Non enregistré");
-                
+            System.out.println("Non enregistré");  
         }
     }
     
@@ -146,11 +145,21 @@ public class AjoutVisiteController implements Initializable {
     private void handleAjoutMedicament(ActionEvent event) throws IOException {
         if(ajoutVisite.isDisable() == true){
             if (isInputMedicamentValid()) {
-                 AjoutMedicament(event);
+                
+                int idMedicament;
+                int idPrevisite;
+                
+                idPrevisite = recupIdPrevisite();
+                ajoutMedicament();
+                
+                idMedicament = recupIdMedicament();
+                if(idMedicament != -1 && idPrevisite != -1)
+                {
+                    ajoutIngerer(idMedicament, idPrevisite);
+                }
+                 
                 //Message juste pour la version demo
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
-                //WARNING il faut faire une entree dans la table ingerer
-                
             }
             else {
                 messageSucces.setText("Vous devez ajouter une prévisite auparavant");
@@ -158,10 +167,24 @@ public class AjoutVisiteController implements Initializable {
         }
     }
     
-    private void AjoutMedicament(ActionEvent event) throws IOException 
+    private int recupIdPrevisite(){
+        String requeteVerif = "select * from Previsite ORDER BY idVisite DESC";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            return result.getInt("idvisite");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+        return -1;
+    }
+    
+    private void ajoutMedicament() 
     {
         //verifie si il y a deja un medoc avec le mm nom
-        String requeteVerif = "select * into Medicament";
+        String requeteVerif = "select * from Medicament";
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerif);
@@ -187,6 +210,33 @@ public class AjoutVisiteController implements Initializable {
         }
     }
     
+    private int recupIdMedicament()
+    {
+        String requeteVerif = "select * from Medicament where nommedic = "+medicament.getText()+");";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            return result.getInt("idmedicament");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+        return -1;
+    }
+    
+    private void ajoutIngerer(int idMedicament, int idPrevisite){
+        String requeteAjout = "insert into Ingerer values ("+medicament.getText()+","+idPrevisite+","+raisonPrise.getText()+");";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteAjout);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+    }
+        
     /**
     * handleTerlmine() est appelé lorsque le médecin à fini d'ajouter une prévisite.
     * Permet de revenir à la page d'accueil médecin.
@@ -219,7 +269,7 @@ public class AjoutVisiteController implements Initializable {
             errorMessage += "Fréquence cardiaque invalide !\n";
         }
         //WARNING a changer
-        if (typeLot.getValue() != "DiOrZen" && typeLot.getValue() != "Placebo") {
+        if (!typeLot.getValue().equals("DiOrZen") && !typeLot.getValue().equals("Placebo")) {
             errorMessage += "Type de lot invalide !\n";
         }
         if (tension.getText() == null || tension.getText().length() == 0) {

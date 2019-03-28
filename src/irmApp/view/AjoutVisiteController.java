@@ -65,6 +65,8 @@ public class AjoutVisiteController implements Initializable {
     
     private int visiteActuelle = -1;
     
+    private int idPatient = -1; //récupéré depuis la page précédente
+    
     ConnexionOracle maconnection = new ConnexionOracle();
     Statement stmt; //créer une variable de la requête
     
@@ -100,26 +102,8 @@ public class AjoutVisiteController implements Initializable {
     @FXML
     private void handleAjoutPrevisite(ActionEvent event) throws IOException {
         if (isInputVisiteValid()) {
-            /*String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
-                   + " nomLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+idPatient+","+idMedecin+","+dateVisite+","
-                   + numLot+","+poids+","+freqCardiaque+","+tension+","+leucocytes+","+hemoglobine+");";
-            try{
-                stmt = maconnection.ObtenirConnection().createStatement();
-                stmt.executeQuery(requeteAjout);
-                //petit pop up
-                JOptionPane.showMessageDialog(null, "Enregistré avec succès");
-                System.out.println("Enregistré");
-                //Revenir à la page d'accueil technicien
-                Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);
-            }
-            catch(SQLException e){
-                System.out.println(e);
-                System.out.println("Non enregistré");
-                messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
-            }*/
-            
+            AjoutPrevisite(event);
+            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
 
             dateVisite.setDisable(true);
             poids.setDisable(true);
@@ -134,44 +118,72 @@ public class AjoutVisiteController implements Initializable {
         }
     } 
     
+    private void AjoutPrevisite(ActionEvent event)throws IOException 
+    {
+        String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
+                   + " nomLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+idPatient+","+idMedecin+","+dateVisite+","
+                   + numLot+","+poids+","+freqCardiaque+","+tension+","+leucocytes+","+hemoglobine+");";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteAjout);
+            //petit pop up
+            JOptionPane.showMessageDialog(null, "Enregistré avec succès");
+            System.out.println("Enregistré");
+            //Revenir à la page d'accueil technicien
+            Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
+            Scene scene = (Scene) ((Node) event.getSource()).getScene();
+            scene.setRoot(root);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+                
+        }
+    }
+    
     
     @FXML
-    private void handleAjoutMedicament(ActionEvent event) {
+    private void handleAjoutMedicament(ActionEvent event) throws IOException {
         if(ajoutVisite.isDisable() == true){
             if (isInputMedicamentValid()) {
-                //verifie si il y a deja un medoc avec le mm nom
-                String requeteVerif = "select * into Medicament";
-                try{
-                    stmt = maconnection.ObtenirConnection().createStatement();
-                    ResultSet result = stmt.executeQuery(requeteVerif);
-                    boolean dejaExistant = false;
-                    while(result.next()){
-                        //WARNING a changer
-                        if(result.getString("nommedic") == medicament.getText())
-                        {
-                            dejaExistant = true;
-                        }
-                    }
-                    System.out.println("Enregistré");
-                    
-                    if(dejaExistant)
-                    {
-                        String AjoutMedoc = "insert into Medicament values (1, "+medicament.getText()+");";
-                        stmt.executeQuery(AjoutMedoc);
-                    }
-                }
-                catch(SQLException e){
-                    System.out.println(e);
-                    System.out.println("Non enregistré");
-                    messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
-                }
-                
-                //WARNING il faut faire une entree dans la table ingerer
+                 AjoutMedicament(event);
+                //Message juste pour la version demo
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+                //WARNING il faut faire une entree dans la table ingerer
+                
             }
             else {
                 messageSucces.setText("Vous devez ajouter une prévisite auparavant");
             }
+        }
+    }
+    
+    private void AjoutMedicament(ActionEvent event) throws IOException 
+    {
+        //verifie si il y a deja un medoc avec le mm nom
+        String requeteVerif = "select * into Medicament";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            boolean dejaExistant = false;
+            while(result.next()){
+                if(result.getString("nommedic").equals(medicament.getText()))
+                {
+                    dejaExistant = true;
+                }
+            }
+            System.out.println("Enregistré");
+                    
+            if(dejaExistant)
+            {
+                String AjoutMedoc = "insert into Medicament values (1, "+medicament.getText()+");";
+                stmt.executeQuery(AjoutMedoc);
+                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
         }
     }
     

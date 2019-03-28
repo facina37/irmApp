@@ -161,9 +161,9 @@ public class AjoutVisiteController implements Initializable {
                 //Message juste pour la version demo
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
             }
-            else {
-                messageSucces.setText("Vous devez ajouter une prévisite auparavant");
-            }
+        }
+        else {
+            messageSucces.setText("Vous devez ajouter une prévisite auparavant");
         }
     }
     
@@ -268,10 +268,11 @@ public class AjoutVisiteController implements Initializable {
         if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0) {
             errorMessage += "Fréquence cardiaque invalide !\n";
         }
-        //WARNING a changer
-        if (!typeLot.getValue().equals("DiOrZen") && !typeLot.getValue().equals("Placebo")) {
+        if(typeLot.getValue() == null)
             errorMessage += "Type de lot invalide !\n";
-        }
+        else
+            if (!typeLot.getValue().equals("DiOrZen") && !typeLot.getValue().equals("Placebo"))
+                errorMessage += "Type de lot invalide !\n";
         if (tension.getText() == null || tension.getText().length() == 0) {
             errorMessage += "Tension invalide !\n";
         }

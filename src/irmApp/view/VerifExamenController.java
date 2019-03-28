@@ -12,8 +12,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import irmApp.database.ConnexionOracle;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 /**
  *
@@ -53,7 +58,7 @@ public class VerifExamenController implements Initializable{
     
     //partie erreur
     @FXML
-    private Label messageErreur;
+    private Label messageErreur, titreErreur;
     @FXML
     private RadioButton refaire;
     @FXML
@@ -66,6 +71,8 @@ public class VerifExamenController implements Initializable{
     private ComboBox grade;
     @FXML
     private Button valideGrade;
+    @FXML
+    private Label titreGrade;
     
     private int idExamen; //récupéré de la page précédente
     private int idPatient;
@@ -83,41 +90,59 @@ public class VerifExamenController implements Initializable{
         grade.setPromptText("Faites votre vhoix");
         grade.setItems(data);
         recuperationInfos();
+        
+        //Initialisation de l'affichage pour la partie validité de l'examen
+        refaire.setVisible(false);
+        suppression.setVisible(false);
+        valideErreur.setVisible(false);
+        grade.setVisible(false);
+        valideGrade.setVisible(false);
+        titreGrade.setVisible(false);
+        titreErreur.setVisible(false);
+        
+        //test pour l'affichage
         gestionErreurs();
     }
     
     /*Qd on valide une des deux decisions lors d'une erreur d'IRM*/
     @FXML
-    private void handleValideErreur(ActionEvent event) {
-        if(isErrorChoiceValid()){
-            if (refaire.isSelected()){
-                //==> on doit supprimer les données de cet examen
-                String requeteSuppr = "delete from examen where idexamen = "+idExamen+";";
-                try {
-                    stmt = maconnection.ObtenirConnection().createStatement();
-                    stmt.executeQuery(requeteSuppr);
-                    System.out.println("L'examen a bien été supprimé");
-                }
-                catch(SQLException e) {
-                    System.out.println("Erreur, l'examen n'a pas été supprimé");
-                }
-                //==> on doit en reprogrammer un dans deux jours
-                String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+idPatient+";";
-                try{
-                    stmt = maconnection.ObtenirConnection().createStatement();
-                    stmt.executeQuery(requeteAgenda);
-                    System.out.println("Un nouvel examen a été programmé dans 2j");
-                }
-                catch(SQLException e) {
-                    System.out.println("Un nouvel examen n'a pas pu etre programmé");
-                }
-            }
-            if (suppression.isSelected()){
-                //==>on supprime l'avant dernier examen effectué par ce patient
-                //petit pop up
-                JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
-            }
-        }
+    private void handleValideErreur(ActionEvent event) throws IOException {
+        
+        
+        Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
+        Scene scene = (Scene) ((Node) event.getSource()).getScene();
+        scene.setRoot(root);
+        
+        
+        //if(isErrorChoiceValid()){
+        //    if (refaire.isSelected()){
+        //        //==> on doit supprimer les données de cet examen
+        //        String requeteSuppr = "delete from examen where idexamen = "+idExamen+";";
+        //        try {
+        //            stmt = maconnection.ObtenirConnection().createStatement();
+        //            stmt.executeQuery(requeteSuppr);
+        //            System.out.println("L'examen a bien été supprimé");
+        //        }
+        //        catch(SQLException e) {
+        //            System.out.println("Erreur, l'examen n'a pas été supprimé");
+        //        }
+        //        //==> on doit en reprogrammer un dans deux jours
+        //        String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+idPatient+";";
+        //        try{
+        //            stmt = maconnection.ObtenirConnection().createStatement();
+        //            stmt.executeQuery(requeteAgenda);
+        //            System.out.println("Un nouvel examen a été programmé dans 2j");
+        //        }
+        //        catch(SQLException e) {
+        //            System.out.println("Un nouvel examen n'a pas pu etre programmé");
+        //        }
+        //    }
+        //    if (suppression.isSelected()){
+        //        //==>on supprime l'avant dernier examen effectué par ce patient
+        //        //petit pop up
+        //        JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
+        //    }
+        //}
     }
     
     private boolean isErrorChoiceValid() {
@@ -144,18 +169,24 @@ public class VerifExamenController implements Initializable{
     
     /*Qd on valide une des deux decisions lors d'une erreur d'IRM*/
     @FXML
-    private void handleValideGrade(ActionEvent event) {
-        if(isGradeChoiceValid()) {
-            String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
-            try {
-                stmt = maconnection.ObtenirConnection().createStatement();
-                stmt.executeQuery(requeteGrade);
-                System.out.println("La décision a bien été prise en compte");
-            }
-            catch(SQLException e) {
-                System.out.println("Erreur, décision non prise en compte");
-            }
-        }
+    private void handleValideGrade(ActionEvent event) throws IOException {
+       
+        Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
+        Scene scene = (Scene) ((Node) event.getSource()).getScene();
+        scene.setRoot(root);
+        
+        
+        //if(isGradeChoiceValid()) {
+        //    String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
+        //    try {
+        //        stmt = maconnection.ObtenirConnection().createStatement();
+        //        stmt.executeQuery(requeteGrade);
+        //        System.out.println("La décision a bien été prise en compte");
+        //    }
+        //   catch(SQLException e) {
+        //       System.out.println("Erreur, décision non prise en compte");
+        //    }
+        //}
     }
     
     private boolean isGradeChoiceValid() {
@@ -202,6 +233,8 @@ public class VerifExamenController implements Initializable{
                 lip_cr.setText(lip_cr.getText()+result.getString("LIP_CR"));
                 naa_cr.setText(naa_cr.getText()+result.getString("NAA_CR"));
                 valide = result.getBoolean("VALIDE");
+                //Affiche les bons champs selon la vlidité de l'examen
+                gestionErreurs();
                 idPatient = result.getInt("IDPATIENT");
             }
         }
@@ -216,15 +249,17 @@ public class VerifExamenController implements Initializable{
     /*Si on n'a pas d'erreurs anatomiques on ne peut pas accéder à la zone d'erreur,
     sinon on ne peut pas laisser le médecin décider d'un grade*/
     public void gestionErreurs(){
-        if(valide == true){
-            messageErreur.setText("L'IRM n'a pas présenté d'erreurs anatomiques");
-            refaire.setDisable(true);
-            suppression.setDisable(true);
-            valideErreur.setDisable(true);
+        if(valide == false){
+            messageErreur.setText("L'IRM a présenté d'erreurs anatomiques");
+            refaire.setVisible(true);
+            suppression.setVisible(true);
+            valideErreur.setVisible(true);
+            titreErreur.setVisible(true);
         } else {
-            messageErreur.setText("L'IRM a présenté des erreurs anatomiques");
-            grade.setDisable(true);
-            valideGrade.setDisable(true);
+            messageErreur.setVisible(false);
+            grade.setVisible(true);
+            valideGrade.setVisible(true);
+            titreGrade.setVisible(true);
         }
     }    
 }

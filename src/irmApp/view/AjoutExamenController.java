@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package irmApp.view;
 
-import irmApp.database.ConnexionOracle;
-import irmApp.MainApp;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -16,60 +9,36 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 /**
- * FXML Controller class
+ * La classe AjoutExamenController permet de gerer l'ajout d'un examen d'IRM à un patient.
  *
- * @author Laure
+ * version 30/03/2019
+ * @author Laure Baaudoin & Marie Bogusz
  */
 public class AjoutExamenController implements Initializable {
-
+    
+    //Champs du formulaire d'ajout d'un examen
     @FXML
     private DatePicker dateExamen;
     @FXML
-    private TextField idMachine;
+    private TextField idMachine, volCrane, axeCrane, volTumeur, ttp, rcbv, mtt;
     @FXML
-    private TextField volCrane;
-    @FXML
-    private TextField axeCrane;
-    @FXML
-    private TextField volTumeur;
-    @FXML
-    private TextField ttp;
-    @FXML
-    private TextField rcbv;
-    @FXML
-    private TextField mtt;
-    @FXML
-    private TextField rcbf;
-    @FXML
-    private TextField lac;
-    @FXML
-    private TextField idMedecin;
-    @FXML
-    private TextField naa_cho;
-    @FXML
-    private TextField cho_cr;
-    @FXML
-    private TextField lip_cr;
-    @FXML
-    private TextField naa_cr;
+    private TextField rcbf, lac, idMedecin, naa_cho, cho_cr, lip_cr, naa_cr;    
     
-    
-    
+    // connexion à la base de données
     ConnexionOracle maconnection = new ConnexionOracle();
-    Statement stmt; //créer une variable de la requête
+    //créer une variable de la requête
+    Statement stmt; 
     
     /**
      * Initializes the controller class.
+     * Permet d'indiquer l'information attendue dans les champs du formulaire.
+     * 
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,6 +59,11 @@ public class AjoutExamenController implements Initializable {
         naa_cr.setPromptText("NAA/Cr");
     }
     
+    /**
+     * isInputExamenValid() permet de vérifier si les champs du formulaire ne sont pas vides.
+     * 
+     * @return boolean
+     */
     private boolean isInputExamenValid() {
         String errorMessage = "";
         
@@ -154,6 +128,13 @@ public class AjoutExamenController implements Initializable {
         }
     }
     
+    /**
+     * handleAjoutExamen() permet d'ajouter l'examen remplie dans le fomrulaire 
+     * à un patient dans la base de données.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleAjoutExamen(ActionEvent event) throws IOException {
         if (isInputExamenValid()) {

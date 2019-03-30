@@ -19,34 +19,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /**
- * FXML Controller class
+ * La classe AccueilTechnicienController permet de gerer la page d'accueil des techniciens.
+ * Permet d'afficher la liste des patients faisant partie de l'étude IRMCare.
+ * Permet d'acceder à la page d'ajout d'un examen une fois un patient selectionné dans la liste.
  *
- * version 25/03/2019
+ * version 30/03/2019
  * @author Laure Baaudoin & Marie Bogusz
  */
 public class AccueilTechnicienController implements Initializable {
-
+    // TableView de la liste des patients
     @FXML
     private TableView<Patient> patientTable;
     @FXML
-    private TableColumn<Patient, String> idColumn;
+    private TableColumn<Patient, String> idColumn, groupeColumn, firstNameColumn;
     @FXML
-    private TableColumn<Patient, String> groupeColumn;
+    private TableColumn<Patient, String> lastNameColumn, ageColumn, statutColumn;
     @FXML
-    private TableColumn<Patient, String> firstNameColumn;
-    @FXML
-    private TableColumn<Patient, String> lastNameColumn;
-    @FXML
-    private TableColumn<Patient, String> ageColumn;
-    @FXML
-    private TableColumn<Patient, String> statutColumn;
-    @FXML
-    private TableColumn<Patient, String> sexeColumn;
-    @FXML
-    private TableColumn<Patient, String> gradeColumn;
+    private TableColumn<Patient, String> sexeColumn, gradeColumn;
+    // mot clé permettant de faire une reherche ciblée dans la TableView des patients
     @FXML
     private TextField motcle;
     
+    //Pop up d'erreur si un patient n'est pas séléctionné avant de passer à la page d'ajout d'un examen
     private Stage dialogStage;
 
     // connexion à la base de données
@@ -107,6 +101,10 @@ public class AccueilTechnicienController implements Initializable {
         return data;
     }
     
+    /**
+    * handleRechercher() est appelé lorsque le boutton rechercher est utilisé
+    * et permet d'appliquer la recherche ciblée à l'aide d'un mot clé.
+    */ 
     @FXML
     public void handleRechercher(){
         ObservableList<Patient> data = FXCollections.observableArrayList();
@@ -147,12 +145,12 @@ public class AccueilTechnicienController implements Initializable {
     /**
     * handleAjoutIrm() est appelé lorsque le boutton ajouter un examen est utilisé.
     * Permet de passer a la page AjoutExamen quand un patient est sélectionné sinon 
-    * affiche un message d'érreur.
+    * affiche un message d'erreur.
     *
     * @param event
     */ 
     @FXML
-    public void handleAjoutExamen(ActionEvent event) throws IOException{
+    public void handleAjoutExamen(ActionEvent event) throws IOException {
         Patient aPatient;
         aPatient = patientTable.getSelectionModel().getSelectedItem();
     

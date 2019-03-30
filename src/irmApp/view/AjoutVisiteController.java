@@ -21,11 +21,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- * La classe AjoutVisite Controller permet de gerer l'ajout des informations 
+ * La classe AjoutVisiteController permet de gerer l'ajout des informations 
  * récoltées par le médecin lors d'une prévisite à un patient.
  * 
  * version 25/03/2019
@@ -33,31 +32,21 @@ import javax.swing.JOptionPane;
  */
 public class AjoutVisiteController implements Initializable {
     
-    //Partie Ajout Prévisite
+    //Champs du formulaire d'ajout d'une previsite
     @FXML
     private DatePicker dateVisite;
     @FXML
-    private TextField poids;
-    @FXML
-    private TextField numLot;
-    @FXML
-    private TextField freqCardiaque;
+    private TextField idMedecin, poids, numLot, freqCardiaque;
     @FXML
     private ComboBox<String> typeLot;//Choix entre DiOrZen ou placebo
     @FXML
-    private TextField tension;
-    @FXML
-    private TextField leucocytes;
-    @FXML
-    private TextField hemoglobine;
-    @FXML
-    private TextField idMedecin;
+    private TextField tension, leucocytes, hemoglobine;
     @FXML
     private Label messageSucces;
     @FXML
     private Button ajoutVisite;    
     
-    //Partie Ajout Médicament
+    //Partie Ajout Médicament du formulaire
     @FXML
     private TextField medicament;
     @FXML
@@ -65,13 +54,16 @@ public class AjoutVisiteController implements Initializable {
     
     private int visiteActuelle = -1;
     
-    private int idPatient = -1; //récupéré depuis la page précédente
+    //L'id du patient auquel on ajoute une previsite récupéré depuis la page précédente
+    private int idPatient = -1; 
     
+    // connexion à la base de données
     ConnexionOracle maconnection = new ConnexionOracle();
-    Statement stmt; //créer une variable de la requête
+    //créer une variable de la requête
+    Statement stmt; 
     
     /**
-     * Initialise le controller.
+     * Initializes the controller class.
      * Permet d'indiquer ce qui est attendu dans les champs du formulaire d'ajout prévisite.
      * 
      * @param url
@@ -99,6 +91,13 @@ public class AjoutVisiteController implements Initializable {
         messageSucces.setText("");
     }    
     
+    /**
+     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
+     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleAjoutPrevisite(ActionEvent event) throws IOException {
         if (isInputVisiteValid()) {
@@ -118,6 +117,12 @@ public class AjoutVisiteController implements Initializable {
         }
     } 
     
+    /**
+     * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     private void AjoutPrevisite(ActionEvent event)throws IOException 
     {
         String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
@@ -140,7 +145,13 @@ public class AjoutVisiteController implements Initializable {
         }
     }
     
-    
+    /**
+     * handleAjoutMedicament() permet de spécifier si le médicament est bien ajouté 
+     * à une previsite.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleAjoutMedicament(ActionEvent event) throws IOException {
         if(ajoutVisite.isDisable() == true){
@@ -167,6 +178,11 @@ public class AjoutVisiteController implements Initializable {
         }
     }
     
+    /**
+     *  
+     * 
+     * @return integer
+     */
     private int recupIdPrevisite(){
         String requeteVerif = "select * from Previsite ORDER BY idVisite DESC";
         try{
@@ -181,6 +197,9 @@ public class AjoutVisiteController implements Initializable {
         return -1;
     }
     
+    /**
+     * 
+     */
     private void ajoutMedicament() 
     {
         //verifie si il y a deja un medoc avec le mm nom
@@ -210,6 +229,11 @@ public class AjoutVisiteController implements Initializable {
         }
     }
     
+    /**
+     * 
+     * 
+     * @return integer
+     */
     private int recupIdMedicament()
     {
         String requeteVerif = "select * from Medicament where nommedic = "+medicament.getText()+");";
@@ -225,6 +249,12 @@ public class AjoutVisiteController implements Initializable {
         return -1;
     }
     
+    /**
+     * 
+     * 
+     * @param idMedicament
+     * @param idPrevisite 
+     */
     private void ajoutIngerer(int idMedicament, int idPrevisite){
         String requeteAjout = "insert into Ingerer values ("+medicament.getText()+","+idPrevisite+","+raisonPrise.getText()+");";
         try{
@@ -301,6 +331,12 @@ public class AjoutVisiteController implements Initializable {
     }
     
     //renvoie True si le String envoyé peut bien être converti en nombre
+    /**
+     * 
+     * 
+     * @param str
+     * @return 
+     */
     public boolean isNumber(String str)
     {
         try {

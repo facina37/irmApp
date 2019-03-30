@@ -5,12 +5,14 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/*App IRM Care BDD IHM
- * Version : 23/03/2019
- * Author : Baudoin, Bogusz
+/** La classe MainApp permet de gerer le lancement de l'application.
+ * 
+ * Version : 30/03/2019
+ * Author : Laure Baudoin & Marie Bogusz
 */
 public class MainApp extends Application {
     
@@ -22,13 +24,14 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("IRM Care");
-        //this.primaryStage.getIcons().add(new Image("file:ressources/logo.jpg"));
+        this.primaryStage.getIcons().add(new Image("file:ressources/logo.png"));
 
         showConnexion();
     }
     
     /**
-     * Ouvre la page de connexion
+     * showConnexion() permet d'ouvrir la page de connexion, 1ere page de 
+     * l'application.
      */
     public void showConnexion(){
          try {
@@ -37,7 +40,7 @@ public class MainApp extends Application {
             loader.setLocation(getClass().getResource("view/Connexion.fxml"));
             root = (AnchorPane) loader.load();
 
-            // Creer nouvelle scene.
+            // Creer nouvelle scene et l'ouvre.
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -48,21 +51,18 @@ public class MainApp extends Application {
     }  
    
     /**
-     * Retourne la scene
+     * getPrimaryStage() permet de retourner la scene
      * @return primaryStage
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
     
+    /**
+     * getPatient() permet de retourner le patient courant
+     * @return patient
+     */
     public Patient getPatient() {
         return patient;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }

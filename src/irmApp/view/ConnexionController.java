@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class permet de gerer la connexion soit d'un médecin soit d'un technicien. 
- * Un médecin et un tchnicien n'a pas accés aux mêmes données.
+ * Un médecin et un technicien n'a pas accés aux mêmes données.
  *
  * IRM Care App IHM Gphy
  * Version : 24/03/2019
@@ -34,15 +34,13 @@ public class ConnexionController implements Initializable{
     @FXML
     private Label message;
     
-    // Reference au main.
+    // connexion à la base de données
     private ConnexionOracle maconnection = new ConnexionOracle();
     //créer une variable de la requêteperche jaunepercha 
     private Statement stmt; 
-    
-    private Stage stage;
         
      /**
-     * Initialise le controller.
+     * Initializes the controller class.
      * Permet d'indiquer ce qui est attendu dans les champs de la page connexion
      * 
      * @param url

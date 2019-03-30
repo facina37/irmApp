@@ -26,57 +26,52 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
- *
- * @author Marie
+ * La classe AccueilMedecinController permet de gerer la page d'accueil des médecins.
+ * Permet d'afficher la liste des patients faisant partie de l'étude IRMCare.
+ * Permet d'afficher la liste des examens à vérifier.
+ * Permet d'acceder à la page d'ajout d'une previsite une fois un patient selectionné dans la liste.
+ * Permet d'acceder à la page de vérification d'un examen une fois l'examen selectionné dans la liste.
+ * 
+ * version 30/03/2019
+ * @author Laure Baaudoin & Marie Bogusz
  */
 public class AccueilMedecinController implements Initializable {
 
-    //tableau patient
+    //TableView de la liste des patients
     @FXML
     private TableView<Patient> patientTable;
     @FXML
-    private TableColumn<Patient, String> idColumn;
+    private TableColumn<Patient, String> idColumn, groupeColumn, firstNameColumn;
     @FXML
-    private TableColumn<Patient, String> groupeColumn;
+    private TableColumn<Patient, String> lastNameColumn, ageColumn, statutColumn;
     @FXML
-    private TableColumn<Patient, String> firstNameColumn;
-    @FXML
-    private TableColumn<Patient, String> lastNameColumn;
-    @FXML
-    private TableColumn<Patient, String> ageColumn;
-    @FXML
-    private TableColumn<Patient, String> statutColumn;
-    @FXML
-    private TableColumn<Patient, String> sexeColumn;
-    @FXML
-    private TableColumn<Patient, String> gradeColumn;
+    private TableColumn<Patient, String> sexeColumn, gradeColumn;
+    // mot clé permettant de faire une reherche ciblée dans la TableView des patients
     @FXML
     private TextField motclePatient;
     
-    //tableau examen
+    //TableView de la liste des examens
     @FXML
     private TableView<Examen> examenTable;
     @FXML
-    private TableColumn<Examen, String> idExamColumn;
-    @FXML
-    private TableColumn<Examen, String> dateColumn;
-    @FXML
-    private TableColumn<Examen, String> prenomColumn;
-    @FXML
-    private TableColumn<Examen, String> nomColumn;    
+    private TableColumn<Examen, String> idExamColumn, dateColumn, prenomColumn, nomColumn; 
+    // mot clé permettant de faire une reherche ciblée dans la TableView des examens
     @FXML
     private TextField motcleExamen;
     
+    //Pop up d'erreur si un patient n'est pas séléctionné avant de passer à la page d'ajout d'un examen
     private Stage dialogStage;
     
+    // connexion à la base de données
     private ConnexionOracle maconnection = new ConnexionOracle();
     //créer une variable de la requête
     private Statement stmt; 
     
     /**
-     * Initialise le controller.
-     * Permet de
+     * Initializes the controller class.
+     * Permet de lier les colonnes des tableView patient et examen avec les données de la base de données.
+     * Permet de remplir les tableView patient et examen à partie d'une liste de patient qui
+     * correspond à la base de données.
      * 
      * @param url
      * @param rb
@@ -104,8 +99,8 @@ public class AccueilMedecinController implements Initializable {
         examenTable.setItems(recuperationExamens());
     }    
     
-    /*
-        Affiche la liste de ts les patients dans le tableau
+    /**
+    *  recuperationPatients() permet d'afficher la liste de tous les patients dans le TableView.
     */
     public ObservableList<Patient> recuperationPatients()
     {
@@ -134,8 +129,8 @@ public class AccueilMedecinController implements Initializable {
         return data;
     }
     
-    /*
-        Affiche la liste de ts les patients recherchés
+    /**
+    *  handleRechercherPatients() permet d'afficher la liste de tous les patients recherchés à l'aide d'un mot clé.
     */
     @FXML
     public void handleRechercherPatients(){
@@ -176,8 +171,8 @@ public class AccueilMedecinController implements Initializable {
     }
     
     /**
-    * handleAjoutVisite() est appelé lorsque le boutton ajouter une prévisite est utilisé
-    * Permet de passer a la page AjoutVisite quand un patient est sélectionné
+    * handleAjoutVisite() est appelé lorsque le boutton ajouter une prévisite est utilisé.
+    * Permet de passer a la page AjoutVisite quand un patient est sélectionné.
     *
     * @param event
     */    
@@ -201,8 +196,8 @@ public class AccueilMedecinController implements Initializable {
         }       
     }    
     
-    /*
-        Récupère tous les examens à valider
+    /**
+     *  recuperationExamens() permet de récupère tous les examens à valider.
     */
     public ObservableList<Examen> recuperationExamens()
     {
@@ -232,8 +227,8 @@ public class AccueilMedecinController implements Initializable {
         return data;
     }
     
-    /*
-        Affiche la liste de ts les examens recherchés
+    /**
+     *  handleRechercherExamens() permet d'afficher la liste de tous les examens recherchés.
     */
     @FXML
     public void handleRechercherExamens(){
@@ -266,8 +261,10 @@ public class AccueilMedecinController implements Initializable {
         examenTable.setItems(data);
     }
     
-    /*
-        Passe a la page Examen perso quand un patient est sélectionné
+    /**
+     * handleVerifExam() permet de passer à la page Examen perso quand un patient est sélectionné.
+     * 
+     * @param event
     */
     @FXML
     public void handleVerifExam(ActionEvent event) throws IOException {

@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
 import javafx.collections.FXCollections;
@@ -21,48 +20,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /**
- *
- * @author Laure
+ * La classe AjoutExamenController permet de gerer l'ajout des informations 
+ * récoltées par le technicien lors d'un examen d'IRM à un patient.
+ * 
+ * version 25/03/2019
+ * @author Laure Baudoin & Marie Bogusz
  */
 public class VerifExamenController implements Initializable{
     //données
     @FXML
-    private Label gradeMachine;
+    private Label gradeMachine, risqueTotal, volCrane, axeCrane, volTumeur;
     @FXML
-    private Label risqueTotal;
-    @FXML
-    private Label volCrane;
-    @FXML
-    private Label axeCrane;
-    @FXML
-    private Label volTumeur;
-    @FXML
-    private Label mtt;
-    @FXML
-    private Label ttp;
-    @FXML
-    private Label rcbv;
-    @FXML
-    private Label rcbf;
-    @FXML
-    private Label cho_cr;
-    @FXML
-    private Label naa_cr;
-    @FXML
-    private Label naa_cho;
-    @FXML
-    private Label lac;
-    @FXML
-    private Label lip_cr;
+    private Label mtt, ttp, rcbv, rcbf, cho_cr, naa_cr, naa_cho, lac, lip_cr;
     private boolean valide;
     
     //partie erreur
     @FXML
     private Label messageErreur, titreErreur;
     @FXML
-    private RadioButton refaire;
-    @FXML
-    private RadioButton suppression;
+    private RadioButton refaire, suppression;
     @FXML
     private Button valideErreur;
     
@@ -78,16 +54,21 @@ public class VerifExamenController implements Initializable{
     private int idPatient;
     private Stage dialogStage;
     
+    // connexion à la base de données
     private ConnexionOracle maconnection = new ConnexionOracle();
-    private Statement stmt; //créer une variable de la requête
+    //créer une variable de la requête
+    private Statement stmt; 
     
     /**
      * Initializes the controller class.
+     * 
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> data = FXCollections.observableArrayList("I","II","III","IV");
-        grade.setPromptText("Faites votre vhoix");
+        grade.setPromptText("Faites votre choix");
         grade.setItems(data);
         recuperationInfos();
         
@@ -104,15 +85,19 @@ public class VerifExamenController implements Initializable{
         gestionErreurs();
     }
     
-    /*Qd on valide une des deux decisions lors d'une erreur d'IRM*/
+    /**
+     * handleValideErreur() permet de valider la décision du médecin sur l'examen qui a une erreur d'IRM 
+     * et de revenir sur la page d'accueil du médecin.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
-    private void handleValideErreur(ActionEvent event) throws IOException {
-        
+    private void handleValideErreur(ActionEvent event) throws IOException {        
         
         Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
         Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        scene.setRoot(root);
-        
+        scene.setRoot(root);        
         
         //if(isErrorChoiceValid()){
         //    if (refaire.isSelected()){
@@ -145,6 +130,12 @@ public class VerifExamenController implements Initializable{
         //}
     }
     
+    /**
+     * isErrorChoiceValid() permet de vérifier l'action du médecin lors de la 
+     * validation de sa décision.
+     * 
+     * @return boolean
+     */
     private boolean isErrorChoiceValid() {
         String errorMessage = "";
         
@@ -167,14 +158,19 @@ public class VerifExamenController implements Initializable{
         }
     }
     
-    /*Qd on valide une des deux decisions lors d'une erreur d'IRM*/
+    /**
+     * handleValideGrade() valider la décision du médecin sur le grade de l'examen
+     * et de revenir sur la page d'accueil du médecin.
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleValideGrade(ActionEvent event) throws IOException {
        
         Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
         Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        scene.setRoot(root);
-        
+        scene.setRoot(root);        
         
         //if(isGradeChoiceValid()) {
         //    String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
@@ -188,30 +184,10 @@ public class VerifExamenController implements Initializable{
         //    }
         //}
     }
-    
-    private boolean isGradeChoiceValid() {
-        String errorMessage = "";
-        
-        if (grade.getValue() != "I" && grade.getValue() != "II" && grade.getValue() != "III" && grade.getValue() != "IV") {
-            errorMessage += "Grade invalide!\n";
-        }
-        if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Show the error message.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Attention !");
-            alert.setHeaderText("Veuillez corriger.");
-            alert.setContentText(errorMessage);
 
-            alert.showAndWait();
-
-            return false;
-        }
-    }
-
-    /*Affiche les données de l'examen*/
+    /**
+     * recuperationInfos() permet d'afficher les données de l'examen à vérifier.
+     */
     public void recuperationInfos(){
         String requete = "select * from examen where idexamen = "+idExamen+";";
         try {
@@ -246,8 +222,10 @@ public class VerifExamenController implements Initializable{
         }
     }
     
-    /*Si on n'a pas d'erreurs anatomiques on ne peut pas accéder à la zone d'erreur,
-    sinon on ne peut pas laisser le médecin décider d'un grade*/
+    /**
+     * gestionErreurs() permet d'acceder au bon formulaire selon la validité 
+     * (si l'examen à une erreur anatomique ou non) de l'axamen à vérifier.
+     */
     public void gestionErreurs(){
         if(valide == false){
             messageErreur.setText("L'IRM a présenté d'erreurs anatomiques");

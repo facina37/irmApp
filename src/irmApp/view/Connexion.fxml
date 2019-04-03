@@ -55,12 +55,12 @@ Author : Bidois, Andreo, Baudoin
                   <Font size="15.0" />
                </font>
             </PasswordField>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleReset" prefHeight="49.0" prefWidth="99.0" text="Annuler" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleReset" prefHeight="41.0" prefWidth="99.0" text="Annuler" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleConnexion" prefHeight="49.0" prefWidth="123.0" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleConnexion" prefHeight="43.0" prefWidth="123.0" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

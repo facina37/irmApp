@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="irmApp.jar" size="35026" download="eager" />
+    <jar href="irmApp.jar" size="35039" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="irmApp" >
     <param name="requiredFXVersion" value="8.0+"/>

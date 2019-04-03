@@ -48,7 +48,7 @@ public class ConnexionController implements Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        login.setPromptText("Login");
+        login.setPromptText("Identifiant");
         pwd.setPromptText("Mot de passe");
         message.setText("");
     }

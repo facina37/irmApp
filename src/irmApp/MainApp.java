@@ -24,6 +24,8 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("IRM Care");
+        this.primaryStage.setMinHeight(600);
+        this.primaryStage.setMinWidth(800);
         this.primaryStage.getIcons().add(new Image("file:ressources/logo.png"));
 
         showConnexion();

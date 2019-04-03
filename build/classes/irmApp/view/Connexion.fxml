@@ -22,32 +22,65 @@ Author : Bidois, Andreo, Baudoin
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="558.0" prefWidth="775.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.ConnexionController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.ConnexionController">
    <children>
-      <Button layoutX="396.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleConnexion" text="Connexion" AnchorPane.bottomAnchor="155.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Button>
-      <Button layoutX="290.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleReset" text="Annuler">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Button>
-      <Label fx:id="message" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="488.0" prefHeight="34.0" prefWidth="468.0" text="Label" textAlignment="CENTER" textFill="#ff0606">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Label layoutX="272.0" layoutY="68.0" text="Connectez-vous">
-         <font>
-            <Font name="System Bold" size="31.0" />
-         </font>
-      </Label>
-      <TextField fx:id="login" layoutX="289.0" layoutY="201.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="198.0">
-         <font>
-            <Font size="14.0" />
-         </font></TextField>
-      <PasswordField fx:id="pwd" layoutX="289.0" layoutY="283.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="198.0">
-         <font>
-            <Font size="14.0" />
-         </font></PasswordField>
+      <GridPane layoutX="31.0" layoutY="156.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="270.0" minHeight="10.0" prefHeight="268.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="325.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="186.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="133.0" minHeight="0.0" prefHeight="116.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Connectez-vous" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+            </Label>
+            <TextField fx:id="login" maxWidth="-Infinity" prefHeight="30.0" prefWidth="341.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </TextField>
+            <PasswordField fx:id="pwd" maxWidth="-Infinity" prefHeight="30.0" prefWidth="336.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </PasswordField>
+            <Button mnemonicParsing="false" onAction="#handleReset" prefHeight="49.0" prefWidth="99.0" text="Annuler" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleConnexion" prefHeight="49.0" prefWidth="123.0" text="Connexion" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Label fx:id="message" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="468.0" text="Label" textAlignment="CENTER" textFill="#ff0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Identifiant : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label text="Mot de passe : " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
    </children>   
 </AnchorPane>

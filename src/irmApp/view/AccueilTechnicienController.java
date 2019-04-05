@@ -69,6 +69,17 @@ public class AccueilTechnicienController implements Initializable {
         gradeColumn.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
         
         patientTable.setItems(recuperationPatients());
+        
+        //Adapattion de la taille des colonnes à la taille de la fenetre
+        patientTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+        idColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+        groupeColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+        firstNameColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 35 );
+        lastNameColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 35 );
+        ageColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+        statutColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
+        sexeColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+        gradeColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
     }   
     
     /**

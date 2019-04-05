@@ -15,14 +15,14 @@
                <children>
                   <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                     <columns>
-                      <TableColumn fx:id="idColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="groupeColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="Groupe" />
-                        <TableColumn fx:id="lastNameColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="212.0" text="Nom" />
-                        <TableColumn fx:id="firstNameColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="186.0" text="Prénom" />
-                        <TableColumn fx:id="ageColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="61.0" text="Age" />
-                        <TableColumn fx:id="statutColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="139.0" text="Statut" />
-                        <TableColumn fx:id="sexeColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="92.0" text="Sexe" />
-                        <TableColumn fx:id="gradeColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="99.0" text="Grade" />
+                      <TableColumn fx:id="idColumn" text="ID" />
+                      <TableColumn fx:id="groupeColumn" text="Groupe" />
+                        <TableColumn fx:id="lastNameColumn" text="Nom" />
+                        <TableColumn fx:id="firstNameColumn" text="Prénom" />
+                        <TableColumn fx:id="ageColumn" text="Age" />
+                        <TableColumn fx:id="statutColumn" text="Statut" />
+                        <TableColumn fx:id="sexeColumn" text="Sexe" />
+                        <TableColumn fx:id="gradeColumn" text="Grade" />
                     </columns>
                   </TableView>
                   <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
@@ -60,10 +60,10 @@
                      </font></Button>
                   <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                     <columns>
-                      <TableColumn fx:id="idExamColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="134.0" text="ID examen" />
-                      <TableColumn fx:id="dateColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="133.0" text="Date" />
-                        <TableColumn fx:id="nomColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="348.0" text="Nom du patient" />
-                        <TableColumn fx:id="prenomColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="324.0" text="Prénom du patient" />
+                      <TableColumn fx:id="idExamColumn" text="ID examen" />
+                      <TableColumn fx:id="dateColumn" text="Date" />
+                        <TableColumn fx:id="nomColumn" text="Nom du patient" />
+                        <TableColumn fx:id="prenomColumn" text="Prénom du patient" />
                     </columns>
                   </TableView>
                   <Button layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">

@@ -8,32 +8,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="775.0" tabClosingPolicy="UNAVAILABLE" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
+<TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
   <tabs>
     <Tab text="Patients">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0">
+                  <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                     <columns>
                       <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
                       <TableColumn fx:id="groupeColumn" prefWidth="74.0" text="Groupe" />
-                      <TableColumn fx:id="lastNameColumn" prefWidth="135.0" text="Nom" />
-                      <TableColumn fx:id="firstNameColumn" prefWidth="165.0" text="Prénom" />
-                      <TableColumn fx:id="ageColumn" prefWidth="79.0" text="Age" />
-                      <TableColumn fx:id="statutColumn" prefWidth="89.0" text="Statut" />
-                      <TableColumn fx:id="sexeColumn" prefWidth="62.0" text="Sexe" />
-                      <TableColumn fx:id="gradeColumn" prefWidth="67.0" text="Grade" />
+                      <TableColumn fx:id="lastNameColumn" prefWidth="215.0" text="Nom" />
+                      <TableColumn fx:id="firstNameColumn" prefWidth="220.0" text="Prénom" />
+                      <TableColumn fx:id="ageColumn" prefWidth="84.0" text="Age" />
+                      <TableColumn fx:id="statutColumn" prefWidth="131.0" text="Statut" />
+                      <TableColumn fx:id="sexeColumn" prefWidth="93.0" text="Sexe" />
+                      <TableColumn fx:id="gradeColumn" prefWidth="75.0" text="Grade" />
                     </columns>
                   </TableView>
-                  <Label layoutX="28.0" layoutY="15.0" text="Liste des patients">
+                  <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" />
-                  <Button layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" />
-                  <Button layoutX="339.0" layoutY="478.0" mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter un IRM" />
+                  <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.rightAnchor="119.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <Button layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjoutExamen" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
                </children></AnchorPane>
       </content>
     </Tab>

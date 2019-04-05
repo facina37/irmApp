@@ -34,7 +34,7 @@
                      <font>
                         <Font size="14.0" />
                      </font></Button>
-                  <Button alignment="BOTTOM_CENTER" layoutX="426.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="14.0">
+                  <Button alignment="BOTTOM_CENTER" layoutX="426.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
@@ -54,7 +54,7 @@
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0">
+                  <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>

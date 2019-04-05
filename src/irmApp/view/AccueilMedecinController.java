@@ -175,7 +175,8 @@ public class AccueilMedecinController implements Initializable {
     * Permet de passer a la page AjoutVisite quand un patient est sélectionné.
     *
     * @param event
-    */    
+    * @throws IOException 
+    */
     @FXML
     private void handleAjoutVisite(ActionEvent event) throws IOException {
         Patient aPatient;

@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package irmApp.database;
 
 import java.sql.*;
 
 
 /**
+ * 
  *
- * @author Laure
+ * IRM Care App IHM Gphy
+ * Version : 24/03/2019
+ * @author Laure Baudoin & Marie Bogusz
  */
 public class ConnexionOracle {
     

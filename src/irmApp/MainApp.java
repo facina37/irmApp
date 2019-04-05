@@ -7,9 +7,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /** La classe MainApp permet de gerer le lancement de l'application.
@@ -35,38 +37,22 @@ public class MainApp extends Application {
 
         showConnexion();
         
-        //this.primaryStage.setOnCloseRequest( event ->
-    //{
-        //System.out.println("CLOSING");
+        //Pop up vérification fermetuere application
+        this.primaryStage.setOnCloseRequest(event -> {           
+            Alert closeConfirmation = new Alert(
+                Alert.AlertType.CONFIRMATION,"Etes vous sûr de vouloir quitter l'application?");
+            Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                ButtonType.OK);
+            exitButton.setText("Quitter");
+            closeConfirmation.setHeaderText("Confirmer la fermeture");
+            closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+            closeConfirmation.initOwner(primaryStage);
 
-    //});
-    
-        this.primaryStage.setOnCloseRequest(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Attention !");
-            alert.setHeaderText("Etes vous sûr de vouloir quitter l'application ?");
-            
-            
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                //this.primaryStage.close();
-                System.out.println("CLOSING1");
-                }
-                if(response==ButtonType.CANCEL){
-                    System.out.println("CLOSING");
-                //alert.close();
+            Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+            if (!ButtonType.OK.equals(closeResponse.get())) {
+                event.consume();
             }
-             });
-            
-            //Optional<ButtonType> result = alert.showAndWait();
-            //if (result.get() == ButtonType.OK){
-            //}
-            //if(result.get()==ButtonType.CANCEL){
-             //   alert.close();
-            //}
-        });
-    
+        });    
     }
     
     /**

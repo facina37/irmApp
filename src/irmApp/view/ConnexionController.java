@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -81,33 +83,35 @@ public class ConnexionController implements Initializable{
             message.setText("Informations incorrectes, veuillez réessayer");
         }
         
-        //Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-        //Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        //scene.setRoot(root);
+        /*
+        String requeteVerifLog = "select * from Medecin where login = "+login+" and pwd = "+pwd+";";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerifLog);
+            while(result.next()){
+                Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                scene.setRoot(root);;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        requeteVerifLog = "select * from Technicien where login = "+login+" and pwd = "+pwd+";";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerifLog);
+            while(result.next()){
+                Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                scene.setRoot(root);
         
-        //dialogStage.close();
-        //String requeteVerifLog = "select * from Medecin where login = "+login+" and pwd = "+pwd+";";
-        //try{
-        //    stmt = maconnection.ObtenirConnection().createStatement();
-        //    ResultSet result = stmt.executeQuery(requeteVerifLog);
-        //    while(result.next()){
-                //mainApp.showMedecin();
-        //    }
-        //}
-        //catch(SQLException e){
-        //    System.out.println(e);
-        //}
-        //requeteVerifLog = "select * from Technicien where login = "+login+" and pwd = "+pwd+";";
-        //try{
-        //    stmt = maconnection.ObtenirConnection().createStatement();
-        //    ResultSet result = stmt.executeQuery(requeteVerifLog);
-        //    while(result.next()){
-                //mainApp.showTechnicien();
-        //    }
-        //}
-        //catch(SQLException e){
-        //    System.out.println(e);
-        //}
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        */
         
         //si on ne se connecte pas à une des deux pages
         //message.setText("Identifiant et mot de passe incorrects");

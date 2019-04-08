@@ -24,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import irmApp.MainApp;
 
 /**
  * La classe AccueilMedecinController permet de gerer la page d'accueil des médecins.
@@ -66,6 +67,8 @@ public class AccueilMedecinController implements Initializable {
     private ConnexionOracle maconnection = new ConnexionOracle();
     //créer une variable de la requête
     private Statement stmt; 
+    
+    private MainApp main;
     
     /**
      * Initializes the controller class.
@@ -191,6 +194,7 @@ public class AccueilMedecinController implements Initializable {
     
         if (aPatient != null) {
             if (aPatient.getStatut() == "Dans le programme"){
+                main.setPatient(aPatient);
                 Parent root = FXMLLoader.load(getClass().getResource("AjoutVisite.fxml"));
                 Scene scene = (Scene) ((Node) event.getSource()).getScene();
                 scene.setRoot(root);

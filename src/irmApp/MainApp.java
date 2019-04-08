@@ -91,4 +91,8 @@ public class MainApp extends Application {
     public Patient getPatient() {
         return patient;
     }
+    
+    public void setPatient(Patient aPatient){
+        patient = aPatient;
+    }
 }

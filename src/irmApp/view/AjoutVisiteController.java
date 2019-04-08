@@ -1,5 +1,6 @@
 package irmApp.view;
 
+import irmApp.MainApp;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +43,7 @@ public class AjoutVisiteController implements Initializable {
     @FXML
     private TextField tension, leucocytes, hemoglobine;
     @FXML
-    private Label messageSucces;
+    private Label messageSucces, titre;
     @FXML
     private Button ajoutVisite;    
     
@@ -62,6 +63,8 @@ public class AjoutVisiteController implements Initializable {
     //créer une variable de la requête
     Statement stmt; 
     
+    private MainApp main;
+    
     /**
      * Initializes the controller class.
      * Permet d'indiquer ce qui est attendu dans les champs du formulaire d'ajout prévisite.
@@ -71,6 +74,8 @@ public class AjoutVisiteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        idPatient = main.getPatient().getId();
+        titre.setText("Ajout d'une pré-visite au patient"+main.getPatient().getLastName()+" "+main.getPatient().getFirstName());
         dateVisite.setPromptText("jj/mm/aaaa");
         poids.setPromptText("Poids (kg)");
         numLot.setPromptText("Numéro du lot");

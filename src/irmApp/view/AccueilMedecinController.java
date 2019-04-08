@@ -5,19 +5,13 @@ import irmApp.model.Examen;
 import irmApp.model.Patient;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -127,7 +121,10 @@ public class AccueilMedecinController implements Initializable {
     //créer une variable de la requête
     private Statement stmt; 
     
+    //Patient séléctionné
     private Patient aPatient;
+    //Examen séléctionné
+    private Examen examen;
 
     /**
      * Initializes the controller class.
@@ -216,13 +213,10 @@ public class AccueilMedecinController implements Initializable {
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
         String requete = "select * from Patient";
-        
         try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
-            System.out.println(requete);
             while(result.next()) {
-                
                 patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
                 if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText())) {
@@ -251,9 +245,7 @@ public class AccueilMedecinController implements Initializable {
     */
     @FXML
     private void handleAjoutVisite(ActionEvent event) throws IOException {
-        
         aPatient = patientTable.getSelectionModel().getSelectedItem();
-    
         if (aPatient != null) {
             if (aPatient.getStatut() == "Dans le programme"){
                 initializePrevisite();
@@ -287,7 +279,6 @@ public class AccueilMedecinController implements Initializable {
         ObservableList<Examen> data = FXCollections.observableArrayList();
         Examen examen;
         String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin is null";
-        System.out.println(requete);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
@@ -352,9 +343,9 @@ public class AccueilMedecinController implements Initializable {
     */
     @FXML
     public void handleVerifExam(ActionEvent event){
-        Examen examen;
         examen = examenTable.getSelectionModel().getSelectedItem();
         if (examen != null) {
+            initializerExamen();
             gridpaneExamen.setVisible(true);
             tabpane.setVisible(false);
         } else {
@@ -363,7 +354,6 @@ public class AccueilMedecinController implements Initializable {
             alert.setTitle("Attention !");
             alert.setHeaderText("Rien n'a été sélectionné !");
             alert.setContentText("Il faut sélectionner un examen.");
-
             alert.showAndWait();
         }
     }
@@ -670,7 +660,6 @@ public class AccueilMedecinController implements Initializable {
         ObservableList<String> data = FXCollections.observableArrayList("I","II","III","IV");
         grade.setPromptText("Faites votre choix");
         grade.setItems(data);
-        recuperationInfos();
         
         //Initialisation de l'affichage pour la partie validité de l'examen
         refaire.setVisible(false);
@@ -680,6 +669,8 @@ public class AccueilMedecinController implements Initializable {
         valideGrade.setVisible(false);
         titreGrade.setVisible(false);
         titreErreur.setVisible(false);
+        
+        recuperationInfos();
     }
     
     /**
@@ -692,9 +683,8 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private void handleValideErreur(ActionEvent event) throws IOException {        
         
-        Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
-        Scene scene = (Scene) ((Node) event.getSource()).getScene();
-        scene.setRoot(root);        
+        tabpane.setVisible(true);
+        gridpaneExamen.setVisible(false);        
         
         //if(isErrorChoiceValid()){
         //    if (refaire.isSelected()){
@@ -784,25 +774,25 @@ public class AccueilMedecinController implements Initializable {
      * recuperationInfos() permet d'afficher les données de l'examen à vérifier.
      */
     public void recuperationInfos(){
-        String requete = "select * from examen where idexamen = 'idExamen'";
+        String requete = "select * from examen where idexamen = '"+examen.getId()+"'";
         try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
-            while(result.next()){
-                gradeMachine.setText(gradeMachine.getText()+result.getString("GRADEMACHINE"));
-                risqueTotal.setText(risqueTotal.getText()+result.getString("RISQUE"));
-                volCrane.setText(volCrane.getText()+result.getString("VOLCRANE"));
-                axeCrane.setText(axeCrane.getText()+result.getString("VALMAXAXECRANE"));
-                volTumeur.setText(volTumeur.getText()+result.getString("VOLTUMEUR"));
-                ttp.setText(ttp.getText()+result.getString("TTP"));
-                rcbv.setText(rcbv.getText()+result.getString("RCBV"));
-                mtt.setText(mtt.getText()+result.getString("MTT"));
-                rcbf.setText(rcbf.getText()+result.getString("RCBF"));
-                lac.setText(lac.getText()+result.getString("LAC"));
-                naa_cho.setText(naa_cho.getText()+result.getString("NAA_CHO"));
-                cho_cr.setText(cho_cr.getText()+result.getString("CHO_CR"));
-                lip_cr.setText(lip_cr.getText()+result.getString("LIP_CR"));
-                naa_cr.setText(naa_cr.getText()+result.getString("NAA_CR"));
+            while(result.next()) {
+                gradeMachine.setText(gradeMachine.getText()+"  "+result.getString("GRADEMACHINE"));
+                risqueTotal.setText(risqueTotal.getText()+"  "+result.getString("RISQUE"));
+                volCrane.setText(volCrane.getText()+"  "+result.getString("VOLCRANE"));
+                axeCrane.setText(axeCrane.getText()+"  "+result.getString("VALMAXAXECRANE"));
+                volTumeur.setText(volTumeur.getText()+"  "+result.getString("VOLTUMEUR"));
+                ttp.setText(ttp.getText()+"  "+result.getString("TTP"));
+                rcbv.setText(rcbv.getText()+"  "+result.getString("RCBV"));
+                mtt.setText(mtt.getText()+"  "+result.getString("MTT"));
+                rcbf.setText(rcbf.getText()+"  "+result.getString("RCBF"));
+                lac.setText(lac.getText()+"  "+result.getString("LAC"));
+                naa_cho.setText(naa_cho.getText()+"  "+result.getString("NAA_CHO"));
+                cho_cr.setText(cho_cr.getText()+"  "+result.getString("CHO_CR"));
+                lip_cr.setText(lip_cr.getText()+"  "+result.getString("LIP_CR"));
+                naa_cr.setText(naa_cr.getText()+"  "+result.getString("NAA_CR"));
                 valide = result.getBoolean("VALIDE");
                 //Affiche les bons champs selon la vlidité de l'examen
                 gestionErreurs();

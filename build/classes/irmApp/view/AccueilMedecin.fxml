@@ -330,7 +330,7 @@
                    <font>
                       <Font size="13.0" />
                    </font></Label>
-                <Label fx:id="lip_cr" prefHeight="17.0" prefWidth="50.0" text="Lip / Cr :" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                <Label fx:id="lip_cr" prefHeight="17.0" prefWidth="50.0" text="Lip / Cr :" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10">
                    <font>
                       <Font size="13.0" />
                    </font></Label>
@@ -351,23 +351,23 @@
                    <font>
                       <Font size="13.0" />
                    </font></RadioButton>
-                <Button fx:id="valideErreur" mnemonicParsing="false"  text="Valider" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+                <Button fx:id="valideErreur" mnemonicParsing="false" onAction="#handleValideErreur" text="Valider" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.rowSpan="2">
                    <font>
                       <Font size="14.0" />
                    </font></Button>
-                <Label fx:id="titreGrade" prefHeight="25.0" prefWidth="211.0" text="Choix du grade" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11">
+                <Label fx:id="titreGrade" prefHeight="25.0" prefWidth="211.0" text="Choix du grade" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="2">
                    <font>
                       <Font name="System Bold" size="20.0" />
                    </font>
                 </Label>
-                <Button fx:id="valideGrade" mnemonicParsing="false"  text="Valider" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="13">
+                <Button fx:id="valideGrade" mnemonicParsing="false" onAction="#handleValideGrade" text="Valider" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="13" GridPane.rowSpan="2">
                    <font>
                       <Font size="14.0" />
                    </font></Button>
                 <ComboBox fx:id="grade" prefWidth="150.0" promptText="Grade" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="13" />
-                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.valignment="TOP" />
              </children>
              <padding>
              </padding>

@@ -121,13 +121,13 @@ public class AccueilMedecinController implements Initializable {
     {
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
-        String requete = "select * from Patient;";
-
+        String requete = "select * from Patient";
         try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
+                System.out.println(result.getInt("GRADEGLIOMEACTUEL"));
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 data.add(patient);
             }
             System.out.println("Liste remplie par la bdd");
@@ -140,7 +140,6 @@ public class AccueilMedecinController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }
-        data.add(new Patient(1,1,"uvjb","iugig",45,false,true,'H',2));
         return data;
     }
     
@@ -151,13 +150,15 @@ public class AccueilMedecinController implements Initializable {
     public void handleRechercherPatients(){
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
-        String requete = "select * from Patient;";
+        String requete = "select * from Patient";
         
         try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
+            System.out.println(requete);
             while(result.next()) {
-                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
+                
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
                 if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText())) {
                     data.add(patient);
@@ -172,16 +173,7 @@ public class AccueilMedecinController implements Initializable {
         catch(NullPointerException e){
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
-        }
-        
-        //debut test
-        patient = new Patient(1,1,"uvjb","iugig",45,false,true,'H',2);
-        if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText()))
-        {
-            data.add(patient);
-        }
-        //fin test
-        
+        }        
         patientTable.setItems(data);
     }
     
@@ -198,15 +190,25 @@ public class AccueilMedecinController implements Initializable {
         aPatient = patientTable.getSelectionModel().getSelectedItem();
     
         if (aPatient != null) {
-            Parent root = FXMLLoader.load(getClass().getResource("AjoutVisite.fxml"));
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            scene.setRoot(root);
+            if (aPatient.getStatut() == "Dans le programme"){
+                Parent root = FXMLLoader.load(getClass().getResource("AjoutVisite.fxml"));
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                scene.setRoot(root);
+            }  else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(dialogStage);
+                alert.setTitle("Attention !");
+                alert.setHeaderText("Patient incorrect !");
+                alert.setContentText("Il faut sélectionner un patient qui fait partie du programme.");
+
+                alert.showAndWait();
+            }                  
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(dialogStage);
             alert.setTitle("Attention !");
             alert.setHeaderText("Rien n'a été sélectionné !");
-            alert.setContentText("Il faut sélectionner un patient");
+            alert.setContentText("Il faut sélectionner un patient.");
 
             alert.showAndWait();
         }       
@@ -219,14 +221,14 @@ public class AccueilMedecinController implements Initializable {
     {
         ObservableList<Examen> data = FXCollections.observableArrayList();
         Examen examen;
-        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin = null;";
-
+        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin is null";
+        System.out.println(requete);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next())
             {
-                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOM"), result.getString("NOM"));
+                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"));
                 data.add(examen);
             }
             System.out.println("Liste remplie par la bdd");
@@ -239,7 +241,7 @@ public class AccueilMedecinController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }        
-        data.add(new Examen(1,new Date(2019-05-02),"uvjb","iugig"));
+
         return data;
     }
     
@@ -250,13 +252,14 @@ public class AccueilMedecinController implements Initializable {
     public void handleRechercherExamens(){
         ObservableList<Examen> data = FXCollections.observableArrayList();
         Examen examen;
-        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin = null;";
+        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin is null";
         
         try{
+            
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOM"), result.getString("NOM"));
+                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"));
                 
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
                 if(examen.getFirstName().contains(motcleExamen.getText()) || examen.getLastName().contains(motcleExamen.getText()))
@@ -296,7 +299,7 @@ public class AccueilMedecinController implements Initializable {
             alert.initOwner(dialogStage);
             alert.setTitle("Attention !");
             alert.setHeaderText("Rien n'a été sélectionné !");
-            alert.setContentText("Il faut sélectionner un examen");
+            alert.setContentText("Il faut sélectionner un examen.");
 
             alert.showAndWait();
         }

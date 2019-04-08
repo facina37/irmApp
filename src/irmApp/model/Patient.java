@@ -31,7 +31,9 @@ public class Patient {
         lastName = new SimpleStringProperty(lastNameP);
         age = new SimpleStringProperty(Integer.toString(ageP));
         sexe = new SimpleStringProperty(Character.toString(sexeP));
-        grade = new SimpleStringProperty(Integer.toString(gradeP));
+        if (gradeP == 0){
+            grade = new SimpleStringProperty("X");
+        }else grade = new SimpleStringProperty(Integer.toString(gradeP));
         if(finiP == true)
             statut = new SimpleStringProperty("Programme fini");
         else if(excluP == true)
@@ -73,5 +75,8 @@ public class Patient {
     }
     public int getId() {
         return Integer.parseInt(id.get());
+    }
+    public String getStatut(){
+        return statut.get();
     }
 }

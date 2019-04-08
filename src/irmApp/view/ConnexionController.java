@@ -63,41 +63,21 @@ public class ConnexionController implements Initializable{
     */
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException {
-        
-        //seulement pour la version de demonstration
-        String pseudo  = login.getText();
-        if(pseudo.equals("medecin"))
-        {
-            Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            scene.setRoot(root);
-        }
-        else if(pseudo.equals("technicien"))
-        {
-            Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            scene.setRoot(root);
-        }
-        else
-        {
-            message.setText("Informations incorrectes, veuillez réessayer");
-        }
-        
-        /*
-        String requeteVerifLog = "select * from Medecin where login = "+login+" and pwd = "+pwd+";";
+        String requeteVerifLog = "select * from Medecin where login = '"+login.getText()+"' and pwd = '"+pwd.getText()+"'";
         try{
-            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt = maconnection.ObtenirConnection().createStatement();            
             ResultSet result = stmt.executeQuery(requeteVerifLog);
             while(result.next()){
                 Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
                 Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);;
-            }
+                scene.setRoot(root);
+                break;
+            }            
         }
         catch(SQLException e){
             System.out.println(e);
         }
-        requeteVerifLog = "select * from Technicien where login = "+login+" and pwd = "+pwd+";";
+        requeteVerifLog = "select * from Technicien where login = '"+login.getText()+"' and pwd = '"+pwd.getText()+"'";
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerifLog);
@@ -105,16 +85,15 @@ public class ConnexionController implements Initializable{
                 Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
                 Scene scene = (Scene) ((Node) event.getSource()).getScene();
                 scene.setRoot(root);
-        
+                break;
             }
         }
         catch(SQLException e){
             System.out.println(e);
-        }
-        */
+        }        
         
         //si on ne se connecte pas à une des deux pages
-        //message.setText("Identifiant et mot de passe incorrects");
+        message.setText("Identifiant et mot de passe incorrects");
     }
     
     /**

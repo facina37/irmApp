@@ -7,7 +7,6 @@ package irmApp.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 
 /**
  *

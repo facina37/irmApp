@@ -5,7 +5,6 @@ import irmApp.model.Examen;
 import irmApp.model.Patient;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,25 +18,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import irmApp.MainApp;
+import javax.swing.JOptionPane;
 
 /**
  * La classe AccueilMedecinController permet de gerer la page d'accueil des médecins.
  * Permet d'afficher la liste des patients faisant partie de l'étude IRMCare.
  * Permet d'afficher la liste des examens à vérifier.
- * Permet d'acceder à la page d'ajout d'une previsite une fois un patient selectionné dans la liste.
- * Permet d'acceder à la page de vérification d'un examen une fois l'examen selectionné dans la liste.
  * 
- * version 30/03/2019
+ * Permet d'acceder à la page d'ajout d'une previsite une fois un patient selectionné dans la liste.
+ * La page d'ajout d'un prévisite permet de gerer l'ajout des informations récoltées par le médecin 
+ * lors d'une prévisite à un patient.
+ * 
+ * Permet d'acceder à la page de vérification d'un examen une fois l'examen selectionné dans la liste.
+ * La page de vérification d'un examen permet au médecin d'emettre son avis sur les examens réalisés 
+ * par les techniciens.
+ * 
+ * version 08/04/2019
  * @author Laure Baaudoin & Marie Bogusz
  */
 public class AccueilMedecinController implements Initializable {
 
+    //*************************Partie Accueil***********************************
+    @FXML
+    private TabPane tabpane;
+    
     //TableView de la liste des patients
     @FXML
     private TableView<Patient> patientTable;
@@ -63,13 +70,65 @@ public class AccueilMedecinController implements Initializable {
     //Pop up d'erreur si un patient n'est pas séléctionné avant de passer à la page d'ajout d'un examen
     private Stage dialogStage;
     
+    //*************************Partie Ajout Prévisite***************************
+    @FXML
+    private GridPane gridpane;
+    
+    //Champs du formulaire d'ajout d'une previsite
+    @FXML
+    private DatePicker dateVisite;
+    @FXML
+    private TextField idMedecin, poids, numLot, freqCardiaque;
+    @FXML
+    private ComboBox<String> typeLot;//Choix entre DiOrZen ou placebo
+    @FXML
+    private TextField tension, leucocytes, hemoglobine;
+    @FXML
+    private Label messageSucces, titre;
+    @FXML
+    private Button ajoutVisite;    
+    
+    //Partie Ajout Médicament du formulaire
+    @FXML
+    private TextField medicament;
+    @FXML
+    private TextArea raisonPrise;
+    
+    //*************************Partie Verification Examen***********************
+    @FXML
+    private GridPane gridpaneExamen;
+    
+    //données
+    @FXML
+    private Label gradeMachine, risqueTotal, volCrane, axeCrane, volTumeur;
+    @FXML
+    private Label mtt, ttp, rcbv, rcbf, cho_cr, naa_cr, naa_cho, lac, lip_cr;
+    private boolean valide;
+    
+    //partie erreur
+    @FXML
+    private Label messageErreur, titreErreur;
+    @FXML
+    private RadioButton refaire, suppression;
+    @FXML
+    private Button valideErreur;
+    
+    //partie choix du grade
+    @FXML
+    private ComboBox grade;
+    @FXML
+    private Button valideGrade;
+    @FXML
+    private Label titreGrade;
+    
+    //*************************Partie Connexion BDD*****************************
     // connexion à la base de données
     private ConnexionOracle maconnection = new ConnexionOracle();
     //créer une variable de la requête
     private Statement stmt; 
     
-    private MainApp main;
-    
+    private Patient aPatient;
+
     /**
      * Initializes the controller class.
      * Permet de lier les colonnes des tableView patient et examen avec les données de la base de données.
@@ -115,6 +174,9 @@ public class AccueilMedecinController implements Initializable {
         statutColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
         sexeColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
         gradeColumn.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+        
+        gridpane.setVisible(false);
+        gridpaneExamen.setVisible(false);
     }    
     
     /**
@@ -189,15 +251,14 @@ public class AccueilMedecinController implements Initializable {
     */
     @FXML
     private void handleAjoutVisite(ActionEvent event) throws IOException {
-        Patient aPatient;
+        
         aPatient = patientTable.getSelectionModel().getSelectedItem();
     
         if (aPatient != null) {
             if (aPatient.getStatut() == "Dans le programme"){
-                main.setPatient(aPatient);
-                Parent root = FXMLLoader.load(getClass().getResource("AjoutVisite.fxml"));
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);
+                initializePrevisite();
+                gridpane.setVisible(true);
+                tabpane.setVisible(false);
             }  else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.initOwner(dialogStage);
@@ -290,14 +351,12 @@ public class AccueilMedecinController implements Initializable {
      * @param event
     */
     @FXML
-    public void handleVerifExam(ActionEvent event) throws IOException {
+    public void handleVerifExam(ActionEvent event){
         Examen examen;
         examen = examenTable.getSelectionModel().getSelectedItem();
-    
         if (examen != null) {
-            Parent root = FXMLLoader.load(getClass().getResource("VerifExamen.fxml"));
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            scene.setRoot(root);
+            gridpaneExamen.setVisible(true);
+            tabpane.setVisible(false);
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(dialogStage);
@@ -308,4 +367,472 @@ public class AccueilMedecinController implements Initializable {
             alert.showAndWait();
         }
     }
+    
+    //====================================================Partie Ajout Prévisite===============================
+    /**
+     * initializePrevisite() permet d'initialiser les information de la page d'ajout d'une prévisite.
+     * Cette page est vivisble seulement quand un patient est séléctionné dans la page d'accueil du médecin.
+     */
+    private void initializePrevisite(){
+        titre.setText("Ajout d'une pré-visite au patient "+aPatient.getLastName()+" "+aPatient.getFirstName());
+        ObservableList<String> list = FXCollections.observableArrayList(
+            "DiOrZen", "Placebo"
+        );
+        typeLot.setItems(list);
+        messageSucces.setText("");
+    }
+    
+    /**
+     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
+     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    private void handleAjoutPrevisite(ActionEvent event) throws IOException {
+        if (isInputVisiteValid()) {
+            //AjoutPrevisite(event);
+            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
+
+            dateVisite.setDisable(true);
+            poids.setDisable(true);
+            numLot.setDisable(true);
+            freqCardiaque.setDisable(true);     
+            typeLot.setDisable(true);
+            tension.setDisable(true);
+            leucocytes.setDisable(true);
+            hemoglobine.setDisable(true);
+            idMedecin.setDisable(true);
+            ajoutVisite.setDisable(true);
+        }
+    } 
+    
+    /**
+     * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    private void AjoutPrevisite(ActionEvent event)throws IOException 
+    {
+        
+        String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
+                   + " nomLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ('aPatient.getId()',"+idMedecin+","+dateVisite+","
+                   + numLot+","+poids+","+freqCardiaque+","+tension+","+leucocytes+","+hemoglobine+")";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteAjout);
+            //petit pop up
+            JOptionPane.showMessageDialog(null, "Enregistré avec succès");
+            System.out.println("Enregistré");
+            //Revenir à la page d'accueil médecin
+            tabpane.setVisible(true);
+            gridpane.setVisible(false);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");  
+        }
+    }
+    
+    /**
+     * handleAjoutMedicament() permet de spécifier si le médicament est bien ajouté 
+     * à une previsite.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    private void handleAjoutMedicament(ActionEvent event) throws IOException {
+        if(ajoutVisite.isDisable() == true){
+            if (isInputMedicamentValid()) {
+                
+                //int idMedicament;
+                //int idPrevisite;
+                
+                //idPrevisite = recupIdPrevisite();
+                //ajoutMedicament();
+                
+                //idMedicament = recupIdMedicament();
+                //if(idMedicament != -1 && idPrevisite != -1)
+                //{
+                    //ajoutIngerer(idMedicament, idPrevisite);
+                //}
+                 
+                //Message juste pour la version demo
+                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+            }
+        }
+        else {
+            messageSucces.setText("Vous devez ajouter une prévisite auparavant");
+        }
+    }
+    
+    /**
+     *  
+     * 
+     * @return integer
+     */
+    private int recupIdPrevisite(){
+        String requeteVerif = "select * from Previsite ORDER BY idVisite DESC";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            return result.getInt("idvisite");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+        return -1;
+    }
+    
+    /**
+     * 
+     */
+    private void ajoutMedicament() 
+    {
+        //verifie si il y a deja un medoc avec le mm nom
+        String requeteVerif = "select * from Medicament";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            boolean dejaExistant = false;
+            while(result.next()){
+                if(result.getString("nommedic").equals(medicament.getText()))
+                {
+                    dejaExistant = true;
+                }
+            }
+            System.out.println("Enregistré");
+                    
+            if(dejaExistant)
+            {
+                String AjoutMedoc = "insert into Medicament values (1, "+medicament.getText()+");";
+                stmt.executeQuery(AjoutMedoc);
+                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+    }
+    
+    /**
+     * 
+     * 
+     * @return integer
+     */
+    private int recupIdMedicament()
+    {
+        String requeteVerif = "select * from Medicament where nommedic = "+medicament.getText()+");";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requeteVerif);
+            return result.getInt("idmedicament");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+        return -1;
+    }
+    
+    /**
+     * 
+     * 
+     * @param idMedicament
+     * @param idPrevisite 
+     */
+    private void ajoutIngerer(int idMedicament, int idPrevisite){
+        String requeteAjout = "insert into Ingerer values ("+medicament.getText()+","+idPrevisite+","+raisonPrise.getText()+");";
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteAjout);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Non enregistré");
+        }
+    }
+        
+    /**
+    * handleTerlmine() est appelé lorsque le médecin à fini d'ajouter une prévisite.
+    * Permet de revenir à la page d'accueil médecin.
+    */
+    @FXML
+    private void handleTermine(ActionEvent event) throws IOException {
+        tabpane.setVisible(true);
+        gridpane.setVisible(false);
+    }
+    
+    /**
+    * isInputVisiteValid() est appelé lorsque le boutton ajouter un médicament à 
+    * une prévisite est utilisé.
+    * Permet de tester la validité des champs du formulaire d'ajout d'une prévisite.
+    */
+    private boolean isInputVisiteValid() {
+        String errorMessage = "";
+        
+        if (dateVisite.getValue() == null) {
+            errorMessage += "Date invalide !\n";
+        } 
+        if (poids.getText() == null || poids.getText().length() == 0 || !isNumber(poids.getText())){
+            errorMessage += "Poids invalide !\n";
+        }
+        if (numLot.getText() == null || numLot.getText().length() == 0 || !isNumber(numLot.getText())) {
+            errorMessage += "Numéro de lot invalide !\n";
+        }
+        if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0 || !isNumber(freqCardiaque.getText())) {
+            errorMessage += "Fréquence cardiaque invalide !\n";
+        }
+        if(typeLot.getValue() == null)
+            errorMessage += "Type de lot invalide !\n";
+        else
+            if (!typeLot.getValue().equals("DiOrZen") && !typeLot.getValue().equals("Placebo"))
+                errorMessage += "Type de lot invalide !\n";
+        if (tension.getText() == null || tension.getText().length() == 0) {
+            errorMessage += "Tension invalide !\n";
+        }
+        if (leucocytes.getText() == null || leucocytes.getText().length() == 0) {
+            errorMessage += "Taux de leucocytes invalide !\n";
+        }
+        if (hemoglobine.getText() == null || hemoglobine.getText().length() == 0) {
+            errorMessage += "Taux d'hémoglobine invalide !\n";
+        }
+        if (idMedecin.getText() == null || idMedecin.getText().length() == 0) {
+            errorMessage += "ID médecin invalide !\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(null);
+            alert.setTitle("Attention !");
+            alert.setHeaderText("Veuillez corriger.");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+            return false;
+        }
+    }
+    
+    /**
+     * renvoie True si le String envoyé peut bien être converti en nombre
+     * 
+     * @param str
+     * @return 
+     */
+    public boolean isNumber(String str)
+    {
+        try {
+            Float.parseFloat(str);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
+    
+    /**
+    * isInputMedicamentValid() est appelé lorsque le boutton ajouter une prévisite est utilisé.
+    * Permet de tester la validité des champs du formulaire d'ajout d'un médicament
+    * lors d'une prévisite.
+    */
+    private boolean isInputMedicamentValid() {
+        String errorMessage = "";
+        if (medicament.getText() == null || medicament.getText().length() == 0) {
+            errorMessage += "Principe actif invalide!\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(null);
+            alert.setTitle("Attention!");
+            alert.setHeaderText("Veuillez corriger.");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+    
+    //====================================================Partie Verif Examen===============================
+    
+    private void initializerExamen(){
+        ObservableList<String> data = FXCollections.observableArrayList("I","II","III","IV");
+        grade.setPromptText("Faites votre choix");
+        grade.setItems(data);
+        recuperationInfos();
+        
+        //Initialisation de l'affichage pour la partie validité de l'examen
+        refaire.setVisible(false);
+        suppression.setVisible(false);
+        valideErreur.setVisible(false);
+        grade.setVisible(false);
+        valideGrade.setVisible(false);
+        titreGrade.setVisible(false);
+        titreErreur.setVisible(false);
+    }
+    
+    /**
+     * handleValideErreur() permet de valider la décision du médecin sur l'examen qui a une erreur d'IRM 
+     * et de revenir sur la page d'accueil du médecin.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    private void handleValideErreur(ActionEvent event) throws IOException {        
+        
+        Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
+        Scene scene = (Scene) ((Node) event.getSource()).getScene();
+        scene.setRoot(root);        
+        
+        //if(isErrorChoiceValid()){
+        //    if (refaire.isSelected()){
+        //        //==> on doit supprimer les données de cet examen
+        //        String requeteSuppr = "delete from examen where idexamen = "+idExamen+";";
+        //        try {
+        //            stmt = maconnection.ObtenirConnection().createStatement();
+        //            stmt.executeQuery(requeteSuppr);
+        //            System.out.println("L'examen a bien été supprimé");
+        //        }
+        //        catch(SQLException e) {
+        //            System.out.println("Erreur, l'examen n'a pas été supprimé");
+        //        }
+        //        //==> on doit en reprogrammer un dans deux jours
+        //        String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+idPatient+";";
+        //        try{
+        //            stmt = maconnection.ObtenirConnection().createStatement();
+        //            stmt.executeQuery(requeteAgenda);
+        //            System.out.println("Un nouvel examen a été programmé dans 2j");
+        //        }
+        //        catch(SQLException e) {
+        //            System.out.println("Un nouvel examen n'a pas pu etre programmé");
+        //        }
+        //    }
+        //    if (suppression.isSelected()){
+        //        //==>on supprime l'avant dernier examen effectué par ce patient
+        //        //petit pop up
+        //        JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
+        //    }
+        //}
+    }
+    
+    /**
+     * isErrorChoiceValid() permet de vérifier l'action du médecin lors de la 
+     * validation de sa décision.
+     * 
+     * @return boolean
+     */
+    private boolean isErrorChoiceValid() {
+        String errorMessage = "";
+        
+        if (refaire.isSelected() == false && suppression.isSelected() == false) {
+            errorMessage += "Vous devez faire un choix avant de valider";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Attention !");
+            alert.setHeaderText("Veuillez corriger.");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+    
+    /**
+     * handleValideGrade() valider la décision du médecin sur le grade de l'examen
+     * et de revenir sur la page d'accueil du médecin.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    private void handleValideGrade(ActionEvent event) throws IOException {
+        tabpane.setVisible(true);
+        gridpaneExamen.setVisible(false);
+        
+        //if(isGradeChoiceValid()) {
+        //    String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
+        //    try {
+        //        stmt = maconnection.ObtenirConnection().createStatement();
+        //        stmt.executeQuery(requeteGrade);
+        //        System.out.println("La décision a bien été prise en compte");
+        //    }
+        //   catch(SQLException e) {
+        //       System.out.println("Erreur, décision non prise en compte");
+        //    }
+        //}
+    }
+
+    /**
+     * recuperationInfos() permet d'afficher les données de l'examen à vérifier.
+     */
+    public void recuperationInfos(){
+        String requete = "select * from examen where idexamen = 'idExamen'";
+        try {
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requete);
+            while(result.next()){
+                gradeMachine.setText(gradeMachine.getText()+result.getString("GRADEMACHINE"));
+                risqueTotal.setText(risqueTotal.getText()+result.getString("RISQUE"));
+                volCrane.setText(volCrane.getText()+result.getString("VOLCRANE"));
+                axeCrane.setText(axeCrane.getText()+result.getString("VALMAXAXECRANE"));
+                volTumeur.setText(volTumeur.getText()+result.getString("VOLTUMEUR"));
+                ttp.setText(ttp.getText()+result.getString("TTP"));
+                rcbv.setText(rcbv.getText()+result.getString("RCBV"));
+                mtt.setText(mtt.getText()+result.getString("MTT"));
+                rcbf.setText(rcbf.getText()+result.getString("RCBF"));
+                lac.setText(lac.getText()+result.getString("LAC"));
+                naa_cho.setText(naa_cho.getText()+result.getString("NAA_CHO"));
+                cho_cr.setText(cho_cr.getText()+result.getString("CHO_CR"));
+                lip_cr.setText(lip_cr.getText()+result.getString("LIP_CR"));
+                naa_cr.setText(naa_cr.getText()+result.getString("NAA_CR"));
+                valide = result.getBoolean("VALIDE");
+                //Affiche les bons champs selon la vlidité de l'examen
+                gestionErreurs();
+               // idPatient = result.getInt("IDPATIENT");
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        catch(NullPointerException e){
+            System.out.println(e);
+        }
+    }
+    
+    /**
+     * gestionErreurs() permet d'acceder au bon formulaire selon la validité 
+     * (si l'examen à une erreur anatomique ou non) de l'axamen à vérifier.
+     */
+    public void gestionErreurs(){
+        if(valide == false){
+            messageErreur.setText("L'IRM a présenté d'erreurs anatomiques");
+            refaire.setVisible(true);
+            suppression.setVisible(true);
+            valideErreur.setVisible(true);
+            titreErreur.setVisible(true);
+        } else {
+            messageErreur.setVisible(false);
+            grade.setVisible(true);
+            valideGrade.setVisible(true);
+            titreGrade.setVisible(true);
+        }
+    }    
 }

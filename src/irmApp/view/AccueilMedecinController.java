@@ -778,20 +778,20 @@ public class AccueilMedecinController implements Initializable {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                gradeMachine.setText(gradeMachine.getText()+"  "+result.getString("GRADEMACHINE"));
-                risqueTotal.setText(risqueTotal.getText()+"  "+result.getString("RISQUE"));
-                volCrane.setText(volCrane.getText()+"  "+result.getString("VOLCRANE"));
-                axeCrane.setText(axeCrane.getText()+"  "+result.getString("VALMAXAXECRANE"));
-                volTumeur.setText(volTumeur.getText()+"  "+result.getString("VOLTUMEUR"));
-                ttp.setText(ttp.getText()+"  "+result.getString("TTP"));
-                rcbv.setText(rcbv.getText()+"  "+result.getString("RCBV"));
-                mtt.setText(mtt.getText()+"  "+result.getString("MTT"));
-                rcbf.setText(rcbf.getText()+"  "+result.getString("RCBF"));
-                lac.setText(lac.getText()+"  "+result.getString("LAC"));
-                naa_cho.setText(naa_cho.getText()+"  "+result.getString("NAA_CHO"));
-                cho_cr.setText(cho_cr.getText()+"  "+result.getString("CHO_CR"));
-                lip_cr.setText(lip_cr.getText()+"  "+result.getString("LIP_CR"));
-                naa_cr.setText(naa_cr.getText()+"  "+result.getString("NAA_CR"));
+                gradeMachine.setText("Grade machine : "+result.getString("GRADEMACHINE"));
+                risqueTotal.setText("Risque total : "+result.getString("RISQUE"));
+                volCrane.setText("Volume crânien : "+result.getString("VOLCRANE"));
+                axeCrane.setText("Volume max. axe crânien : "+result.getString("VALMAXAXECRANE"));
+                volTumeur.setText("Volume tumeur : "+result.getString("VOLTUMEUR"));
+                ttp.setText("TTP : "+result.getString("TTP"));
+                rcbv.setText("rCBV : "+result.getString("RCBV"));
+                mtt.setText("MTT : "+result.getString("MTT"));
+                rcbf.setText("rCBF : "+result.getString("RCBF"));
+                lac.setText("Lac : "+result.getString("LAC"));
+                naa_cho.setText("Naa/Cho : "+result.getString("NAA_CHO"));
+                cho_cr.setText("Cho/Cr : "+result.getString("CHO_CR"));
+                lip_cr.setText("Lip/Cr : "+result.getString("LIP_CR"));
+                naa_cr.setText("Naa/Cr : "+result.getString("NAA_CR"));
                 valide = result.getBoolean("VALIDE");
                 //Affiche les bons champs selon la vlidité de l'examen
                 gestionErreurs();

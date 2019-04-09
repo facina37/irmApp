@@ -369,6 +369,20 @@ public class AccueilMedecinController implements Initializable {
         );
         typeLot.setItems(list);
         messageSucces.setText("");
+        
+        dateVisite.setDisable(false);
+        poids.setDisable(false);
+        numLot.setDisable(false);
+        freqCardiaque.setDisable(false);     
+        typeLot.setDisable(false);
+        tension.setDisable(false);
+        leucocytes.setDisable(false);
+        hemoglobine.setDisable(false);
+        idMedecin.setDisable(false);
+        ajoutVisite.setDisable(false);
+        
+        raisonPrise.setDisable(true);
+        medicament.setDisable(true);
     }
     
     /**
@@ -381,9 +395,33 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private void handleAjoutPrevisite(ActionEvent event) throws IOException {
         if (isInputVisiteValid()) {
-            //AjoutPrevisite(event);
-            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");
-
+            AjoutPrevisite(event);
+            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");            
+            
+            raisonPrise.setDisable(false);
+            medicament.setDisable(false);
+        }
+    } 
+    
+    /**
+     * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    private void AjoutPrevisite(ActionEvent event) {
+        
+        String requeteAjout = "Insert into Previsite (idPatient, idMed, dateVisite,"
+                   + " numLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idMedecin.getText()+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
+                   + numLot.getText()+","+poids.getText()+","+freqCardiaque.getText()+","+tension.getText()+","+leucocytes.getText()+","+hemoglobine.getText()+")";
+        System.out.println(requeteAjout);
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteAjout);
+            //petit pop up
+            JOptionPane.showMessageDialog(null, "Enregistré avec succès");
+            System.out.println("Enregistré");
+            //Grise la partie ajout prévisite
             dateVisite.setDisable(true);
             poids.setDisable(true);
             numLot.setDisable(true);
@@ -394,30 +432,6 @@ public class AccueilMedecinController implements Initializable {
             hemoglobine.setDisable(true);
             idMedecin.setDisable(true);
             ajoutVisite.setDisable(true);
-        }
-    } 
-    
-    /**
-     * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
-     * 
-     * @param event
-     * @throws IOException 
-     */
-    private void AjoutPrevisite(ActionEvent event)throws IOException 
-    {
-        
-        String requeteAjout = "Insert into Previsite (idPatient, idMedecin, dateVisie,"
-                   + " nomLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ('aPatient.getId()',"+idMedecin+","+dateVisite+","
-                   + numLot+","+poids+","+freqCardiaque+","+tension+","+leucocytes+","+hemoglobine+")";
-        try{
-            stmt = maconnection.ObtenirConnection().createStatement();
-            stmt.executeQuery(requeteAjout);
-            //petit pop up
-            JOptionPane.showMessageDialog(null, "Enregistré avec succès");
-            System.out.println("Enregistré");
-            //Revenir à la page d'accueil médecin
-            tabpane.setVisible(true);
-            gridpane.setVisible(false);
         }
         catch(SQLException e){
             System.out.println(e);
@@ -553,8 +567,9 @@ public class AccueilMedecinController implements Initializable {
     */
     @FXML
     private void handleTermine(ActionEvent event) throws IOException {
+        patientTable.setItems(recuperationPatients());
         tabpane.setVisible(true);
-        gridpane.setVisible(false);
+        gridpane.setVisible(false);        
     }
     
     /**

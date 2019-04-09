@@ -397,9 +397,6 @@ public class AccueilMedecinController implements Initializable {
         if (isInputVisiteValid()) {
             AjoutPrevisite(event);
             messageSucces.setText("Vous avez ajouté une prévisite à la base de données");            
-            
-            raisonPrise.setDisable(false);
-            medicament.setDisable(false);
         }
     } 
     
@@ -431,6 +428,9 @@ public class AccueilMedecinController implements Initializable {
             hemoglobine.setDisable(true);
             idMedecin.setDisable(true);
             ajoutVisite.setDisable(true);
+            
+            raisonPrise.setDisable(false);
+            medicament.setDisable(false);
         }
         catch(SQLException e){
             System.out.println(e);
@@ -457,7 +457,6 @@ public class AccueilMedecinController implements Initializable {
                 ajoutMedicament();
                 
                 idMedicament = recupIdMedicament();
-                System.out.println(idMedicament);
                 if(idMedicament != -1 && idPrevisite != -1)
                 {
                     ajoutIngerer(idMedicament, idPrevisite);
@@ -480,7 +479,9 @@ public class AccueilMedecinController implements Initializable {
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerif);
-            return result.getInt("idvisite");
+            while(result.next()){
+                return result.getInt("idvisite");
+            }
         }
         catch(SQLException e){
             System.out.println(e);
@@ -504,9 +505,7 @@ public class AccueilMedecinController implements Initializable {
                 if(result.getString("nommedic").equals(medicament.getText())) {
                     dejaExistant = true;
                 }
-            }
-            System.out.println("Enregistré");
-                    
+            }      
             if(dejaExistant == false) {
                 String AjoutMedoc = "insert into Medicament values (1, '"+medicament.getText()+"')";
                 System.out.println(AjoutMedoc);
@@ -516,7 +515,6 @@ public class AccueilMedecinController implements Initializable {
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("Non enregistré");
         }
     }
     
@@ -527,17 +525,20 @@ public class AccueilMedecinController implements Initializable {
      */
     private int recupIdMedicament()
     {
-        String requeteVerif = "select * from Medicament where nommedic = '"+medicament.getText()+"')";
+        String requeteVerif = "select * from Medicament where nommedic like '"+medicament.getText()+"'";
         System.out.println(requeteVerif);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerif);
-            return result.getInt("idmedicament");
+            while(result.next()){
+                return result.getInt("idmedicament");
+            }
         }
         catch(SQLException e){
             System.out.println(e);
             System.out.println("Non enregistré");
         }
+        System.out.println("idmedicament non obtenu");
         return -1;
     }
     

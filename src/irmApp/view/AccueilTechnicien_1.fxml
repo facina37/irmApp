@@ -41,7 +41,7 @@
                              <font>
                                 <Font size="14.0" />
                              </font></Button>
-                          <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjout" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
+                          <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjoutExamen" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
                              <font>
                                 <Font name="System Bold" size="14.0" />
                              </font></Button>
@@ -211,6 +211,10 @@
              <padding>
              </padding>
           </GridPane>
+
+        
+        
+        
 
 </children>
 </AnchorPane>

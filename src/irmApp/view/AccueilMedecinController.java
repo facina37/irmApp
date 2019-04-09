@@ -414,7 +414,6 @@ public class AccueilMedecinController implements Initializable {
         String requeteAjout = "Insert into Previsite (idPatient, idMed, dateVisite,"
                    + " numLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idMedecin.getText()+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
                    + numLot.getText()+","+poids.getText()+","+freqCardiaque.getText()+","+tension.getText()+","+leucocytes.getText()+","+hemoglobine.getText()+")";
-        System.out.println(requeteAjout);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             stmt.executeQuery(requeteAjout);
@@ -451,20 +450,18 @@ public class AccueilMedecinController implements Initializable {
         if(ajoutVisite.isDisable() == true){
             if (isInputMedicamentValid()) {
                 
-                //int idMedicament;
-                //int idPrevisite;
+                int idMedicament;
+                int idPrevisite;
                 
-                //idPrevisite = recupIdPrevisite();
-                //ajoutMedicament();
+                idPrevisite = recupIdPrevisite();
+                ajoutMedicament();
                 
-                //idMedicament = recupIdMedicament();
-                //if(idMedicament != -1 && idPrevisite != -1)
-                //{
-                    //ajoutIngerer(idMedicament, idPrevisite);
-                //}
-                 
-                //Message juste pour la version demo
-                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+                idMedicament = recupIdMedicament();
+                System.out.println(idMedicament);
+                if(idMedicament != -1 && idPrevisite != -1)
+                {
+                    ajoutIngerer(idMedicament, idPrevisite);
+                }
             }
         }
         else {
@@ -479,6 +476,7 @@ public class AccueilMedecinController implements Initializable {
      */
     private int recupIdPrevisite(){
         String requeteVerif = "select * from Previsite ORDER BY idVisite DESC";
+        System.out.println(requeteVerif);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerif);
@@ -503,16 +501,15 @@ public class AccueilMedecinController implements Initializable {
             ResultSet result = stmt.executeQuery(requeteVerif);
             boolean dejaExistant = false;
             while(result.next()){
-                if(result.getString("nommedic").equals(medicament.getText()))
-                {
+                if(result.getString("nommedic").equals(medicament.getText())) {
                     dejaExistant = true;
                 }
             }
             System.out.println("Enregistré");
                     
-            if(dejaExistant)
-            {
-                String AjoutMedoc = "insert into Medicament values (1, "+medicament.getText()+");";
+            if(dejaExistant == false) {
+                String AjoutMedoc = "insert into Medicament values (1, '"+medicament.getText()+"')";
+                System.out.println(AjoutMedoc);
                 stmt.executeQuery(AjoutMedoc);
                 messageSucces.setText("Vous avez ajouté un médicament à la base de données");
             }
@@ -530,7 +527,8 @@ public class AccueilMedecinController implements Initializable {
      */
     private int recupIdMedicament()
     {
-        String requeteVerif = "select * from Medicament where nommedic = "+medicament.getText()+");";
+        String requeteVerif = "select * from Medicament where nommedic = '"+medicament.getText()+"')";
+        System.out.println(requeteVerif);
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requeteVerif);
@@ -544,13 +542,13 @@ public class AccueilMedecinController implements Initializable {
     }
     
     /**
-     * 
+     * ajoutIngerer() permet de lier un médicament et une prévisite
      * 
      * @param idMedicament
      * @param idPrevisite 
      */
     private void ajoutIngerer(int idMedicament, int idPrevisite){
-        String requeteAjout = "insert into Ingerer values ("+medicament.getText()+","+idPrevisite+","+raisonPrise.getText()+");";
+        String requeteAjout = "insert into Ingerer values ("+idMedicament+","+idPrevisite+",'"+raisonPrise.getText()+"')";
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             stmt.executeQuery(requeteAjout);

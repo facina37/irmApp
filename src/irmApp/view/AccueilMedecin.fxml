@@ -135,7 +135,6 @@
                    </font></Label>
                 <DatePicker fx:id="dateVisite" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <TextField fx:id="poids" maxWidth="175.0" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                <TextField fx:id="numLot" maxHeight="25.0" maxWidth="131.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <TextField fx:id="freqCardiaque" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <TextField fx:id="tension" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                 <ComboBox fx:id="typeLot" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
@@ -170,11 +169,6 @@
                    </font>
                 </Label>
                 <Label text="Date de la prévisite :" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                   <font>
-                      <Font size="14.0" />
-                   </font>
-                </Label>
-                <Label text="Numéro du lot :" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                    <font>
                       <Font size="14.0" />
                    </font>

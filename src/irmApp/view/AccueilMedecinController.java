@@ -71,7 +71,7 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private DatePicker dateVisite;
     @FXML
-    private TextField idMedecin, poids, numLot, freqCardiaque;
+    private TextField idMedecin, poids, freqCardiaque;
     @FXML
     private ComboBox<String> typeLot;//Choix entre DiOrZen ou placebo
     @FXML
@@ -372,7 +372,6 @@ public class AccueilMedecinController implements Initializable {
         
         dateVisite.setDisable(false);
         poids.setDisable(false);
-        numLot.setDisable(false);
         freqCardiaque.setDisable(false);     
         typeLot.setDisable(false);
         tension.setDisable(false);
@@ -409,8 +408,8 @@ public class AccueilMedecinController implements Initializable {
     private void AjoutPrevisite(ActionEvent event) {
         
         String requeteAjout = "Insert into Previsite (idPatient, idMed, dateVisite,"
-                   + " numLot, poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idMedecin.getText()+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
-                   + numLot.getText()+","+poids.getText()+","+freqCardiaque.getText()+","+tension.getText()+","+leucocytes.getText()+","+hemoglobine.getText()+")";
+                   + " poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idMedecin.getText()+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
+                   + poids.getText()+","+freqCardiaque.getText()+","+tension.getText()+","+leucocytes.getText()+","+hemoglobine.getText()+")";
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             stmt.executeQuery(requeteAjout);
@@ -420,7 +419,6 @@ public class AccueilMedecinController implements Initializable {
             //Grise la partie ajout prévisite
             dateVisite.setDisable(true);
             poids.setDisable(true);
-            numLot.setDisable(true);
             freqCardiaque.setDisable(true);     
             typeLot.setDisable(true);
             tension.setDisable(true);
@@ -584,9 +582,6 @@ public class AccueilMedecinController implements Initializable {
         } 
         if (poids.getText() == null || poids.getText().length() == 0 || !isNumber(poids.getText())){
             errorMessage += "Poids invalide !\n";
-        }
-        if (numLot.getText() == null || numLot.getText().length() == 0 || !isNumber(numLot.getText())) {
-            errorMessage += "Numéro de lot invalide !\n";
         }
         if (freqCardiaque.getText() == null || freqCardiaque.getText().length() == 0 || !isNumber(freqCardiaque.getText())) {
             errorMessage += "Fréquence cardiaque invalide !\n";

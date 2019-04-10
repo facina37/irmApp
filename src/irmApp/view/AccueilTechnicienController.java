@@ -13,11 +13,8 @@ import javafx.stage.Stage;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javax.swing.JOptionPane;
 
 /**
  * La classe AccueilTechnicienController permet de gerer la page d'accueil des techniciens.
@@ -56,13 +53,16 @@ public class AccueilTechnicienController implements Initializable {
     @FXML
     private TextField idMachine, volCrane, axeCrane, volTumeur, ttp, rcbv, mtt;
     @FXML
-    private TextField rcbf, lac, idMedecin, naa_cho, cho_cr, lip_cr, naa_cr;
+    private TextField rcbf, lac, idTechnicien, naa_cho, cho_cr, lip_cr, naa_cr;
     
     //*************************Partie Connexion à la bdd************************
     // connexion à la base de données
     private ConnexionOracle maconnection = new ConnexionOracle();
     // créer une variable de la requête  
-    private Statement stmt;   
+    private Statement stmt;
+    
+    //Patient séléctionné
+    private Patient aPatient;
     
     /**
      * Initializes the controller class.
@@ -107,13 +107,13 @@ public class AccueilTechnicienController implements Initializable {
     public ObservableList<Patient> recuperationPatients() {
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
-        String requete = "select * from Patient;";
-
-        try{
+        String requete = "select * from Patient";
+        try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
+                System.out.println(result.getInt("GRADEGLIOMEACTUEL"));
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 data.add(patient);
             }
             System.out.println("Liste remplie par la bdd");
@@ -126,7 +126,6 @@ public class AccueilTechnicienController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }
-        data.add(new Patient(1,1,"uvjb","iugig",45,false,true,'H',2));
         return data;
     }
     
@@ -180,20 +179,16 @@ public class AccueilTechnicienController implements Initializable {
     */ 
     @FXML
     public void handleAjout(ActionEvent event){
-        Patient aPatient;
-        aPatient = patientTable.getSelectionModel().getSelectedItem();
-    
+        aPatient = patientTable.getSelectionModel().getSelectedItem();    
         if (aPatient != null) {
             tabpane.setVisible(false);
             gridpane.setVisible(true);
-        } 
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(dialogStage);
             alert.setTitle("Attention !");
             alert.setHeaderText("Rien n'a été sélectionné !");
             alert.setContentText("Il faut sélectionner un patient");
-
             alert.showAndWait();
         }
     }
@@ -237,7 +232,7 @@ public class AccueilTechnicienController implements Initializable {
         if (lac.getText() == null || lac.getText().length() == 0) {
             errorMessage += "Lac invalide !\n";
         }
-        if(idMedecin.getText() == null || idMedecin.getText().length() == 0){
+        if(idTechnicien.getText() == null || idTechnicien.getText().length() == 0){
             errorMessage += "ID Médecin invalide !\n";
         }
         if (naa_cho.getText() == null || naa_cho.getText().length() == 0) {
@@ -278,11 +273,11 @@ public class AccueilTechnicienController implements Initializable {
     @FXML
     private void handleAjoutExamen(ActionEvent event) throws IOException {
         if (isInputExamenValid()) {
-            /*String requeteAjout = "Insert into Examen (idMachine, idPatient, idMedecin, dateExam,"
+            String requeteAjout = "Insert into Examen (idMachine, idPatient, idTechnicien, dateExam,"
                    + " volCrane, valMaxAxeCrane, volTumeur, Cho_Cr, Naa_Cr, Naa_Cho, lip_cr, mtt,"
-                   + " ttp, rcbv, rcbf, lac) values ("+idMachine+","+idPatient().getId()+","+idMedecin+","
-                   + dateExamen+","+volCrane+","+axeCrane+","+volTumeur+","+cho_cr+","+naa_cr+","
-                   + naa_cho+","+lip_cr+","+mtt+","+ttp+","+rcbv+","+rcbf+","+lac+");";
+                   + " ttp, rcbv, rcbf, lac) values ("+idMachine.getText()+","+aPatient.getId()+","+idTechnicien.getText()+",TO_DATE('"+dateExamen.getValue()+"','YYYY-MM-DD'),"
+                   + volCrane.getText()+","+axeCrane.getText()+","+volTumeur.getText()+","+cho_cr.getText()+","+naa_cr.getText()+","
+                   + naa_cho.getText()+","+lip_cr.getText()+","+mtt.getText()+","+ttp.getText()+","+rcbv.getText()+","+rcbf.getText()+","+lac.getText()+")";
             try{
                 stmt = maconnection.ObtenirConnection().createStatement();
                 stmt.executeQuery(requeteAjout);
@@ -290,14 +285,13 @@ public class AccueilTechnicienController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Enregistré avec succès");
                 System.out.println("Enregistré");
                 //Revenir à la page d'accueil technicien
-                Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);
+                tabpane.setVisible(true);
+                gridpane.setVisible(false);
             }
             catch(SQLException e){
                 System.out.println(e);
                 System.out.println("Non enregistré");
-            }*/
+            }
         }
     }     
 }

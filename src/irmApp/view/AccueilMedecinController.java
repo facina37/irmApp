@@ -178,8 +178,7 @@ public class AccueilMedecinController implements Initializable {
     /**
     *  recuperationPatients() permet d'afficher la liste de tous les patients dans le TableView.
     */
-    public ObservableList<Patient> recuperationPatients()
-    {
+    public ObservableList<Patient> recuperationPatients() {
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
         String requete = "select * from Patient";

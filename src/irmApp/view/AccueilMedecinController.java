@@ -77,9 +77,9 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private TextField tension, leucocytes, hemoglobine;
     @FXML
-    private Label messageSucces, titre;
+    private Label titre;
     @FXML
-    private Button ajoutVisite;    
+    private Button ajoutVisite, ajoutMedicament;    
     
     //Partie Ajout Médicament du formulaire
     @FXML
@@ -367,7 +367,6 @@ public class AccueilMedecinController implements Initializable {
             "DiOrZen", "Placebo"
         );
         typeLot.setItems(list);
-        messageSucces.setText("");
         
         dateVisite.setDisable(false);
         poids.setDisable(false);
@@ -381,23 +380,9 @@ public class AccueilMedecinController implements Initializable {
         
         raisonPrise.setDisable(true);
         medicament.setDisable(true);
+        ajoutMedicament.setDisable(true);
     }
-    
-    /**
-     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
-     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
-     * 
-     * @param event
-     * @throws IOException 
-     */
-    @FXML
-    private void handleAjoutPrevisite(ActionEvent event) throws IOException {
-        if (isInputVisiteValid()) {
-            AjoutPrevisite(event);
-            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");            
-        }
-    } 
-    
+
     /**
      * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
      * 
@@ -414,7 +399,7 @@ public class AccueilMedecinController implements Initializable {
             stmt.executeQuery(requeteAjout);
             //petit pop up
             JOptionPane.showMessageDialog(null, "Enregistré avec succès");
-            //Grise la partie ajout prévisite
+            //Grise la partie ajout prévisite et pas la partie médoc
             dateVisite.setDisable(true);
             poids.setDisable(true);
             freqCardiaque.setDisable(true);     
@@ -423,10 +408,10 @@ public class AccueilMedecinController implements Initializable {
             leucocytes.setDisable(true);
             hemoglobine.setDisable(true);
             idMedecin.setDisable(true);
-            ajoutVisite.setDisable(true);
-            
+            ajoutVisite.setDisable(true);            
             raisonPrise.setDisable(false);
             medicament.setDisable(false);
+            ajoutMedicament.setDisable(false);
         }
         catch(SQLException e){
             System.out.println(e); 
@@ -459,7 +444,7 @@ public class AccueilMedecinController implements Initializable {
             }
         }
         else {
-            messageSucces.setText("Vous devez ajouter une prévisite auparavant");
+            JOptionPane.showMessageDialog(null, "Vous devez ajouter une prévisite auparavant");
         }
     }
     
@@ -505,7 +490,7 @@ public class AccueilMedecinController implements Initializable {
                 String AjoutMedoc = "insert into Medicament values (1, '"+medicament.getText()+"')";
                 System.out.println(AjoutMedoc);
                 stmt.executeQuery(AjoutMedoc);
-                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
+                JOptionPane.showMessageDialog(null, "Vous avez ajouté un médicament à la base de données.");
             }
         }
         catch(SQLException e){
@@ -565,6 +550,20 @@ public class AccueilMedecinController implements Initializable {
         tabpane.setVisible(true);
         gridpane.setVisible(false);        
     }
+    
+    /**
+     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
+     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
+     * 
+     * @param event
+     */
+    @FXML
+    private void handleAjoutPrevisite(ActionEvent event) {
+        if (isInputVisiteValid()) {
+            AjoutPrevisite(event);
+            JOptionPane.showMessageDialog(null, "Vous avez ajouté une prévisite à la base de données");            
+        }
+} 
     
     /**
     * isInputVisiteValid() est appelé lorsque le boutton ajouter un médicament à 

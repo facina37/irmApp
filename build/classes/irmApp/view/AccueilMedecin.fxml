@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilMedecinController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilMedecinController">
    <children>
       <TabPane fx:id="tabpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -15,6 +26,19 @@
             <content>
               <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="200.0">
                      <children>
+                        <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font name="System Bold" size="30.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="motclePatient" layoutX="653.0" layoutY="16.0" prefHeight="30.0" prefWidth="228.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Button defaultButton="true" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
                         <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                           <columns>
                             <TableColumn fx:id="idColumn" text="ID" />
@@ -27,23 +51,10 @@
                               <TableColumn fx:id="gradeColumn" text="Grade" />
                           </columns>
                         </TableView>
-                        <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font name="System Bold" size="30.0" />
-                           </font>
-                        </Label>
-                        <Button defaultButton="true" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
                         <Button alignment="BOTTOM_CENTER" layoutX="426.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <TextField fx:id="motclePatient" layoutX="653.0" layoutY="16.0" prefHeight="30.0" prefWidth="228.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></TextField>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -56,9 +67,13 @@
                               <Font name="System Bold" size="30.0" />
                            </font>
                         </Label>
-                        <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
+                        <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" prefHeight="30.0" prefWidth="230.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="15.0">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <Button defaultButton="true" layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font size="14.0" />
                            </font></Button>
                         <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                           <columns>
@@ -68,41 +83,27 @@
                               <TableColumn fx:id="prenomColumn" text="Prénom du patient" />
                           </columns>
                         </TableView>
-                        <Button defaultButton="true" layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
+                        <Button layoutX="427.0" layoutY="727.0" maxHeight="30.0" maxWidth="162.0" mnemonicParsing="false" onAction="#handleVerifExam" prefHeight="30.0" prefWidth="162.0" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" prefHeight="30.0" prefWidth="230.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></TextField>
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Tableau de bord">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
-            <Tab text="Aide">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
 
 
 
-          <GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" hgap="20.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <GridPane fx:id="gridpane" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="299.0" minWidth="0.0" prefWidth="0.0" />
               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="153.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="458.0" minWidth="0.0" prefWidth="128.0" />
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="346.0" minWidth="0.0" prefWidth="178.0" />
               <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="444.0" minWidth="10.0" prefWidth="109.0" />
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="185.0" />
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="439.0" minWidth="10.0" prefWidth="90.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="174.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="439.0" minWidth="10.0" prefWidth="101.0" />
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="0.0" />
             </columnConstraints>
             <rowConstraints>
@@ -115,10 +116,9 @@
                 <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="64.0" minHeight="8.0" prefHeight="22.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="148.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="55.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="148.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
             </rowConstraints>
              <children>
                 <Label fx:id="titre" text="Ajouter une prévisite" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="LEFT">
@@ -134,30 +134,25 @@
                       <Font name="System Bold" size="18.0" />
                    </font></Label>
                 <DatePicker fx:id="dateVisite" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <TextField fx:id="idMedecin" maxWidth="175.0" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                <ComboBox fx:id="typeLot" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                 <TextField fx:id="poids" maxWidth="175.0" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <TextField fx:id="freqCardiaque" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <TextField fx:id="tension" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                <ComboBox fx:id="typeLot" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                 <TextField fx:id="leucocytes" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <TextField fx:id="hemoglobine" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                <TextField fx:id="idMedecin" maxWidth="175.0" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                 <Button fx:id="ajoutVisite" mnemonicParsing="false" onAction="#handleAjoutPrevisite" text="Ajouter une prévisite" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                <Button fx:id="Terminer" mnemonicParsing="false" onAction="#handleTermine" text="Terminer" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="11">
-                   <font>
-                      <Font name="System Bold" size="18.0" />
-                   </font></Button>
-                <Label fx:id="messageSucces" alignment="CENTER" prefHeight="17.0" prefWidth="509.0" text="Messages" textFill="#9a1818" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
-                <TextArea fx:id="raisonPrise" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                   <GridPane.margin>
-                   </GridPane.margin>
-                </TextArea>
-                <Button fx:id="ajoutMedicament" mnemonicParsing="false" onAction="#handleAjoutMedicament" text="Ajouter un médicament" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
                 <Label prefHeight="27.0" prefWidth="617.0" text="Etape 2 : Les médicaments" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                    <font>
                       <Font name="System Bold" size="18.0" />
                    </font>
                 </Label>
                 <TextField fx:id="medicament" maxWidth="337.0" prefHeight="25.0" prefWidth="337.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="7" />
+                <TextArea fx:id="raisonPrise" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="8" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+                   <GridPane.margin>
+                   </GridPane.margin>
+                </TextArea>
+                <Button fx:id="ajoutMedicament" mnemonicParsing="false" onAction="#handleAjoutMedicament" text="Ajouter un médicament" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
                 <Label text="Principe actif :" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                    <font>
                       <Font size="14.0" />
@@ -203,11 +198,15 @@
                       <Font size="14.0" />
                    </font>
                 </Label>
-                <Label text="ID du médecin :" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                <Label text="ID du médecin :" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                    <font>
                       <Font size="14.0" />
                    </font>
                 </Label>
+                <Button fx:id="Terminer" mnemonicParsing="false" onAction="#handleTermine" text="Terminer" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
+                   <font>
+                      <Font name="System Bold" size="18.0" />
+                   </font></Button>
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="11" GridPane.valignment="TOP" />
@@ -223,6 +222,7 @@
               <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="10.0" prefWidth="310.0" />
               <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.0" minWidth="0.0" prefWidth="355.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="295.0" />
+            <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
               <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
@@ -239,6 +239,7 @@
                 <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="56.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
+            <RowConstraints />
             </rowConstraints>
              <children>
                 <Label text="Examen de Jean-Pierre Durand le 18/08/2018" GridPane.columnIndex="1" GridPane.columnSpan="4">
@@ -337,15 +338,15 @@
                    <font>
                       <Font size="16.0" />
                    </font></Label>
-                <RadioButton fx:id="suppression" mnemonicParsing="false" prefHeight="19.0" prefWidth="289.0" text="Suppression des données du dernier examen" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
-                   <font>
-                      <Font size="13.0" />
-                   </font></RadioButton>
                 <RadioButton fx:id="refaire" mnemonicParsing="false" text="Refaire un examen dans 2 jours" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="13">
                    <font>
                       <Font size="13.0" />
                    </font></RadioButton>
-                <Button fx:id="valideErreur" mnemonicParsing="false" onAction="#handleValideErreur" text="Valider" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.rowSpan="2">
+                <RadioButton fx:id="suppression" mnemonicParsing="false" prefHeight="19.0" prefWidth="289.0" text="Suppression des données du dernier examen" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+                   <font>
+                      <Font size="13.0" />
+                   </font></RadioButton>
+                <Button fx:id="valideErreur" mnemonicParsing="false" onAction="#handleValideErreur" text="Valider" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="13" GridPane.rowSpan="2">
                    <font>
                       <Font size="14.0" />
                    </font></Button>
@@ -354,11 +355,11 @@
                       <Font name="System Bold" size="20.0" />
                    </font>
                 </Label>
-                <Button fx:id="valideGrade" mnemonicParsing="false" onAction="#handleValideGrade" text="Valider" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="13" GridPane.rowSpan="2">
+                <ComboBox fx:id="grade" prefWidth="150.0" promptText="Grade" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="12" GridPane.rowSpan="2" />
+                <Button fx:id="valideGrade" mnemonicParsing="false" onAction="#handleValideGrade" text="Valider" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="12" GridPane.rowSpan="2">
                    <font>
                       <Font size="14.0" />
                    </font></Button>
-                <ComboBox fx:id="grade" prefWidth="150.0" promptText="Grade" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="13" />
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                 <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.valignment="TOP" />

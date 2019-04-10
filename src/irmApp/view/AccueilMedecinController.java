@@ -687,10 +687,6 @@ public class AccueilMedecinController implements Initializable {
      */
     @FXML
     private void handleValideErreur(ActionEvent event) throws IOException {        
-        
-        tabpane.setVisible(true);
-        gridpaneExamen.setVisible(false);        
-        
         if(isErrorChoiceValid()){
             if (refaire.isSelected()){
                 //==> on doit supprimer les données de cet examen
@@ -720,6 +716,8 @@ public class AccueilMedecinController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
             }
         }
+        tabpane.setVisible(true);
+        gridpaneExamen.setVisible(false);   
     }
     
     /**
@@ -759,19 +757,23 @@ public class AccueilMedecinController implements Initializable {
      */
     @FXML
     private void handleValideGrade(ActionEvent event) {
-        String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idexamen = "+examen.getId()+"";
-        System.out.println(requeteGrade);
-        try {
+        if (grade.getValue() == null){
             //petit pop up
-            JOptionPane.showMessageDialog(null, "Choix enregistré avec succès");
-            tabpane.setVisible(true);
-            gridpaneExamen.setVisible(false);
-            stmt = maconnection.ObtenirConnection().createStatement();
-            stmt.executeQuery(requeteGrade);
-            System.out.println("La décision a bien été prise en compte");
-        }
-        catch(SQLException e) {
-            System.out.println("Erreur, décision non prise en compte");
+            JOptionPane.showMessageDialog(null, "Veuillez faire un choix.");
+        }else {
+            String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idexamen = "+examen.getId()+"";
+            System.out.println(requeteGrade);
+            try {
+                //petit pop up
+                JOptionPane.showMessageDialog(null, "Choix enregistré avec succès.");
+                tabpane.setVisible(true);
+                gridpaneExamen.setVisible(false);
+                stmt = maconnection.ObtenirConnection().createStatement();
+                stmt.executeQuery(requeteGrade);
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
         }
     }
 

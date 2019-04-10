@@ -109,6 +109,7 @@ public class AccueilMedecinController implements Initializable {
     //partie choix du grade
     @FXML
     private ComboBox grade;
+    int gr;
     @FXML
     private Button valideGrade;
     @FXML
@@ -186,7 +187,6 @@ public class AccueilMedecinController implements Initializable {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                System.out.println(result.getInt("GRADEGLIOMEACTUEL"));
                 patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 data.add(patient);
             }
@@ -414,7 +414,6 @@ public class AccueilMedecinController implements Initializable {
             stmt.executeQuery(requeteAjout);
             //petit pop up
             JOptionPane.showMessageDialog(null, "Enregistré avec succès");
-            System.out.println("Enregistré");
             //Grise la partie ajout prévisite
             dateVisite.setDisable(true);
             poids.setDisable(true);
@@ -430,8 +429,7 @@ public class AccueilMedecinController implements Initializable {
             medicament.setDisable(false);
         }
         catch(SQLException e){
-            System.out.println(e);
-            System.out.println("Non enregistré");  
+            System.out.println(e); 
         }
     }
     
@@ -664,7 +662,7 @@ public class AccueilMedecinController implements Initializable {
     //====================================================Partie Verif Examen===============================
     
     private void initializerExamen(){
-        ObservableList<String> data = FXCollections.observableArrayList("I","II","III","IV");
+        ObservableList<String> data = FXCollections.observableArrayList("1","2","3","4");
         grade.setPromptText("Faites votre choix");
         grade.setItems(data);
         
@@ -693,35 +691,35 @@ public class AccueilMedecinController implements Initializable {
         tabpane.setVisible(true);
         gridpaneExamen.setVisible(false);        
         
-        //if(isErrorChoiceValid()){
-        //    if (refaire.isSelected()){
-        //        //==> on doit supprimer les données de cet examen
-        //        String requeteSuppr = "delete from examen where idexamen = "+idExamen+";";
-        //        try {
-        //            stmt = maconnection.ObtenirConnection().createStatement();
-        //            stmt.executeQuery(requeteSuppr);
-        //            System.out.println("L'examen a bien été supprimé");
-        //        }
-        //        catch(SQLException e) {
-        //            System.out.println("Erreur, l'examen n'a pas été supprimé");
-        //        }
-        //        //==> on doit en reprogrammer un dans deux jours
-        //        String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+idPatient+";";
-        //        try{
-        //            stmt = maconnection.ObtenirConnection().createStatement();
-        //            stmt.executeQuery(requeteAgenda);
-        //            System.out.println("Un nouvel examen a été programmé dans 2j");
-        //        }
-        //        catch(SQLException e) {
-        //            System.out.println("Un nouvel examen n'a pas pu etre programmé");
-        //        }
-        //    }
-        //    if (suppression.isSelected()){
-        //        //==>on supprime l'avant dernier examen effectué par ce patient
-        //        //petit pop up
-        //        JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
-        //    }
-        //}
+        if(isErrorChoiceValid()){
+            if (refaire.isSelected()){
+                //==> on doit supprimer les données de cet examen
+                String requeteSuppr = "delete from examen where idexamen = "+examen.getId()+"";
+                try {
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    stmt.executeQuery(requeteSuppr);
+                    System.out.println("L'examen a bien été supprimé");
+                }
+                catch(SQLException e) {
+                    System.out.println("Erreur, l'examen n'a pas été supprimé");
+                }
+                //==> on doit en reprogrammer un dans deux jours
+                String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+aPatient.getId()+"";
+                try{
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    stmt.executeQuery(requeteAgenda);
+                    System.out.println("Un nouvel examen a été programmé dans 2j");
+                }
+                catch(SQLException e) {
+                    System.out.println("Un nouvel examen n'a pas pu etre programmé");
+                }
+            }
+            if (suppression.isSelected()){
+                //==>on supprime l'avant dernier examen effectué par ce patient
+                //petit pop up
+                JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
+            }
+        }
     }
     
     /**
@@ -760,21 +758,21 @@ public class AccueilMedecinController implements Initializable {
      * @throws IOException 
      */
     @FXML
-    private void handleValideGrade(ActionEvent event) throws IOException {
-        tabpane.setVisible(true);
-        gridpaneExamen.setVisible(false);
-        
-        //if(isGradeChoiceValid()) {
-        //    String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
-        //    try {
-        //        stmt = maconnection.ObtenirConnection().createStatement();
-        //        stmt.executeQuery(requeteGrade);
-        //        System.out.println("La décision a bien été prise en compte");
-        //    }
-        //   catch(SQLException e) {
-        //       System.out.println("Erreur, décision non prise en compte");
-        //    }
-        //}
+    private void handleValideGrade(ActionEvent event) {
+        String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idexamen = "+examen.getId()+"";
+        System.out.println(requeteGrade);
+        try {
+            //petit pop up
+            JOptionPane.showMessageDialog(null, "Choix enregistré avec succès");
+            tabpane.setVisible(true);
+            gridpaneExamen.setVisible(false);
+            stmt = maconnection.ObtenirConnection().createStatement();
+            stmt.executeQuery(requeteGrade);
+            System.out.println("La décision a bien été prise en compte");
+        }
+        catch(SQLException e) {
+            System.out.println("Erreur, décision non prise en compte");
+        }
     }
 
     /**

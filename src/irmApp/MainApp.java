@@ -24,8 +24,6 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private AnchorPane root;
     private Patient patient;
-    
-    private Stage dialogStage;
        
      @Override
     public void start(Stage primaryStage) throws Exception {
@@ -75,24 +73,4 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }  
-   
-    /**
-     * getPrimaryStage() permet de retourner la scene
-     * @return primaryStage
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-    
-    /**
-     * getPatient() permet de retourner le patient courant
-     * @return patient
-     */
-    public Patient getPatient() {
-        return patient;
-    }
-    
-    public void setPatient(Patient aPatient){
-        patient = aPatient;
-    }
 }

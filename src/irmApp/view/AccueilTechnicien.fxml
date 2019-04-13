@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
    <children>
         <TabPane fx:id="tabpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <tabs>
@@ -23,19 +16,6 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                        <children>
-                          <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
-                             <font>
-                                <Font name="System Bold" size="30.0" />
-                             </font>
-                          </Label>
-                          <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.rightAnchor="119.0">
-                             <font>
-                                <Font size="14.0" />
-                             </font></TextField>
-                          <Button defaultButton="true" layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0">
-                             <font>
-                                <Font size="14.0" />
-                             </font></Button>
                           <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
                             <columns>
                               <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
@@ -48,11 +28,29 @@
                               <TableColumn fx:id="gradeColumn" prefWidth="75.0" text="Grade" />
                             </columns>
                           </TableView>
+                          <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                             <font>
+                                <Font name="System Bold" size="30.0" />
+                             </font>
+                          </Label>
+                          <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.rightAnchor="119.0">
+                             <font>
+                                <Font size="14.0" />
+                             </font></TextField>
+                          <Button layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0">
+                             <font>
+                                <Font size="14.0" />
+                             </font></Button>
                           <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjout" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
                              <font>
                                 <Font name="System Bold" size="14.0" />
                              </font></Button>
                        </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Aide">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
           </tabs>
@@ -90,28 +88,28 @@
                           <Font name="System Bold" size="24.0" />
                   </font>
                   </Label>
-                  <DatePicker fx:id="dateExamen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="idMachine" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <TextField fx:id="idTechnicien" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                  <TextField fx:id="mtt" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                   <TextField fx:id="volCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="ttp" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="10" />
                   <TextField fx:id="axeCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <TextField fx:id="volTumeur" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                  <TextField fx:id="cho_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <TextField fx:id="naa_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <TextField fx:id="rcbv" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <TextField fx:id="idMachine" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="volTumeur" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                  <DatePicker fx:id="dateExamen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="rcbf" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                  <TextField fx:id="lac" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <TextField fx:id="cho_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="lip_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <TextField fx:id="naa_cho" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
                   <GridPane.margin>
                   </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="lip_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <TextField fx:id="lac" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                  <TextField fx:id="rcbv" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <TextField fx:id="rcbf" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                  <TextField fx:id="mtt" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                  <TextField fx:id="ttp" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                  <Button mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="11">
                   <font>
                           <Font name="System Bold" size="18.0" />
                   </font></Button>
+                  <TextField fx:id="idTechnicien" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                   <Label text="Date de l'examen :" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <font>
                           <Font size="14.0" />

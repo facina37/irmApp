@@ -1,5 +1,6 @@
 package irmApp.view;
 
+import irmApp.MainApp;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -17,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class permet de gerer la connexion soit d'un médecin soit d'un technicien. 
@@ -39,7 +42,7 @@ public class ConnexionController implements Initializable{
     private ConnexionOracle maconnection = new ConnexionOracle();
     //créer une variable de la requêteperche jaunepercha 
     private Statement stmt; 
-        
+    
      /**
      * Initializes the controller class.
      * Permet d'indiquer ce qui est attendu dans les champs de la page connexion
@@ -67,24 +70,53 @@ public class ConnexionController implements Initializable{
         try{
             stmt = maconnection.ObtenirConnection().createStatement();            
             ResultSet result = stmt.executeQuery(requeteVerifLog);
-            while(result.next()){
-                Parent root = FXMLLoader.load(getClass().getResource("AccueilMedecin.fxml"));
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);
+            while(result.next()){    
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource("view/AccueilMedecin.fxml"));
+                Parent tableViewParent = loader.load();
+
+                Scene tableViewScene = new Scene(tableViewParent);
+
+                //access the controller and call a method
+                AccueilMedecinController controller = loader.getController();
+                controller.initData(result.getInt("IDMED"));
+
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setTitle("IRM Care - Page médecin - Binvenue Dr "+result.getString("NOMMED"));
+                window.getIcons().add(new Image("file:ressources/logo.jpg"));
+                window.setScene(tableViewScene);
+                window.show();               
+               
                 break;
             }            
         }
         catch(SQLException e){
             System.out.println(e);
         }
-        requeteVerifLog = "select * from Technicien where login = '"+login.getText()+"' and pwd = '"+pwd.getText()+"'";
-        try{
+        
+        requeteVerifLog = "select * from Technicien where login = '"+login.getText()+"' and pwd = '"+pwd.getText()+"'";        
+        try{            
             stmt = maconnection.ObtenirConnection().createStatement();
-            ResultSet result = stmt.executeQuery(requeteVerifLog);
+            ResultSet result = stmt.executeQuery(requeteVerifLog);            
             while(result.next()){
-                Parent root = FXMLLoader.load(getClass().getResource("AccueilTechnicien.fxml"));
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                scene.setRoot(root);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource("view/AccueilTechnicien.fxml"));
+                Parent tableViewParent = loader.load();
+
+                Scene tableViewScene = new Scene(tableViewParent);
+
+                //access the controller and call a method
+                AccueilTechnicienController controller = loader.getController();
+                controller.initData(result.getInt("IDTECHNICIEN"));
+
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setTitle("IRM Care - Page technicien - Binvenue "+result.getString("PRENOM")+" "+result.getString("NOM"));
+                window.getIcons().add(new Image("file:ressources/logo.jpg"));
+                window.setScene(tableViewScene);
+                window.show();               
+               
                 break;
             }
         }

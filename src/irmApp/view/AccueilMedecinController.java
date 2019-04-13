@@ -77,9 +77,9 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private TextField tension, leucocytes, hemoglobine;
     @FXML
-    private Label titre;
+    private Label messageSucces, titre;
     @FXML
-    private Button ajoutVisite, ajoutMedicament;    
+    private Button ajoutVisite;    
     
     //Partie Ajout Médicament du formulaire
     @FXML
@@ -125,6 +125,8 @@ public class AccueilMedecinController implements Initializable {
     private Patient aPatient;
     //Examen séléctionné
     private Examen examen;
+    //Id du médecin qui s'est conneccté
+    private Integer idmed;
 
     /**
      * Initializes the controller class.
@@ -176,6 +178,15 @@ public class AccueilMedecinController implements Initializable {
         gridpaneExamen.setVisible(false);
     }    
     
+    /** 
+     * intiData() permet de récuperer l'Id du médecin qui s'est connecté
+     * @param thisIdmed 
+     */
+    public void initData(Integer thisIdmed){
+        idmed = thisIdmed;
+        System.out.println(idmed);
+    }
+    
     /**
     *  recuperationPatients() permet d'afficher la liste de tous les patients dans le TableView.
     */
@@ -190,15 +201,12 @@ public class AccueilMedecinController implements Initializable {
                 patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 data.add(patient);
             }
-            System.out.println("Liste remplie par la bdd");
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
         }
         catch(NullPointerException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
         }
         return data;
     }
@@ -217,19 +225,16 @@ public class AccueilMedecinController implements Initializable {
             while(result.next()) {
                 patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
-                if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText())) {
+                if(patient.getFirstName().toUpperCase().contains(motclePatient.getText().toUpperCase()) || patient.getLastName().toUpperCase().contains(motclePatient.getText().toUpperCase())) {
                     data.add(patient);
                 }
             }
-            System.out.println("Liste remplie par la bdd");
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
         }
         catch(NullPointerException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
         }        
         patientTable.setItems(data);
     }
@@ -316,7 +321,7 @@ public class AccueilMedecinController implements Initializable {
                 examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"));
                 
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
-                if(examen.getFirstName().contains(motcleExamen.getText()) || examen.getLastName().contains(motcleExamen.getText()))
+                if(examen.getFirstName().toUpperCase().contains(motcleExamen.getText().toUpperCase()) || examen.getLastName().toUpperCase().contains(motcleExamen.getText().toUpperCase()))
                 {
                     data.add(examen);
                 }
@@ -367,6 +372,7 @@ public class AccueilMedecinController implements Initializable {
             "DiOrZen", "Placebo"
         );
         typeLot.setItems(list);
+        messageSucces.setText("");
         
         dateVisite.setDisable(false);
         poids.setDisable(false);
@@ -380,9 +386,23 @@ public class AccueilMedecinController implements Initializable {
         
         raisonPrise.setDisable(true);
         medicament.setDisable(true);
-        ajoutMedicament.setDisable(true);
     }
-
+    
+    /**
+     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
+     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    private void handleAjoutPrevisite(ActionEvent event) throws IOException {
+        if (isInputVisiteValid()) {
+            AjoutPrevisite(event);
+            messageSucces.setText("Vous avez ajouté une prévisite à la base de données");            
+        }
+    } 
+    
     /**
      * AjoutPrevisite() permet d'ajouter la prévisite à la base de données.
      * 
@@ -392,14 +412,14 @@ public class AccueilMedecinController implements Initializable {
     private void AjoutPrevisite(ActionEvent event) {
         
         String requeteAjout = "Insert into Previsite (idPatient, idMed, dateVisite,"
-                   + " poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idMedecin.getText()+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
+                   + " poids, freqcardiaque, tension, tauxleuco, tauxhemoglo) values ("+aPatient.getId()+","+idmed+",TO_DATE('"+dateVisite.getValue()+"','YYYY-MM-DD'),"
                    + poids.getText()+","+freqCardiaque.getText()+","+tension.getText()+","+leucocytes.getText()+","+hemoglobine.getText()+")";
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             stmt.executeQuery(requeteAjout);
             //petit pop up
             JOptionPane.showMessageDialog(null, "Enregistré avec succès");
-            //Grise la partie ajout prévisite et pas la partie médoc
+            //Grise la partie ajout prévisite
             dateVisite.setDisable(true);
             poids.setDisable(true);
             freqCardiaque.setDisable(true);     
@@ -408,10 +428,10 @@ public class AccueilMedecinController implements Initializable {
             leucocytes.setDisable(true);
             hemoglobine.setDisable(true);
             idMedecin.setDisable(true);
-            ajoutVisite.setDisable(true);            
+            ajoutVisite.setDisable(true);
+            
             raisonPrise.setDisable(false);
             medicament.setDisable(false);
-            ajoutMedicament.setDisable(false);
         }
         catch(SQLException e){
             System.out.println(e); 
@@ -444,7 +464,7 @@ public class AccueilMedecinController implements Initializable {
             }
         }
         else {
-            JOptionPane.showMessageDialog(null, "Vous devez ajouter une prévisite auparavant");
+            messageSucces.setText("Vous devez ajouter une prévisite auparavant");
         }
     }
     
@@ -490,7 +510,7 @@ public class AccueilMedecinController implements Initializable {
                 String AjoutMedoc = "insert into Medicament values (1, '"+medicament.getText()+"')";
                 System.out.println(AjoutMedoc);
                 stmt.executeQuery(AjoutMedoc);
-                JOptionPane.showMessageDialog(null, "Vous avez ajouté un médicament à la base de données.");
+                messageSucces.setText("Vous avez ajouté un médicament à la base de données");
             }
         }
         catch(SQLException e){
@@ -550,20 +570,6 @@ public class AccueilMedecinController implements Initializable {
         tabpane.setVisible(true);
         gridpane.setVisible(false);        
     }
-    
-    /**
-     * handleAjoutPrevisite() permet de spécifier si l'ajout de la previsite est validé.
-     * Permet l'acces à la partie du formulaire permettant l'ajout d'un ou plusieurs médicaments.
-     * 
-     * @param event
-     */
-    @FXML
-    private void handleAjoutPrevisite(ActionEvent event) {
-        if (isInputVisiteValid()) {
-            AjoutPrevisite(event);
-            JOptionPane.showMessageDialog(null, "Vous avez ajouté une prévisite à la base de données");            
-        }
-} 
     
     /**
     * isInputVisiteValid() est appelé lorsque le boutton ajouter un médicament à 
@@ -760,7 +766,7 @@ public class AccueilMedecinController implements Initializable {
             //petit pop up
             JOptionPane.showMessageDialog(null, "Veuillez faire un choix.");
         }else {
-            String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idexamen = "+examen.getId()+"";
+            String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+", idmed = "+idmed+" where idexamen = "+examen.getId()+"";
             System.out.println(requeteGrade);
             try {
                 //petit pop up

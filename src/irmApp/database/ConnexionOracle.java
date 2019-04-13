@@ -12,9 +12,11 @@ import java.sql.*;
  */
 public class ConnexionOracle {
     
+
     String urlPilote = "oracle.jdbc.driver.OracleDriver";
     //voir le nom exact à gauche
-    String urlBase = "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS";
+    //String urlBase = "jdbc:oracle:thin:@192.168.254.3:1521:PFPBS";
+    String urlBase = "jdbc:oracle:thin:@localhost:1521:ORCL";
     Connection con;
     
     public ConnexionOracle(){

@@ -53,7 +53,7 @@ public class AccueilTechnicienController implements Initializable {
     @FXML
     private TextField idMachine, volCrane, axeCrane, volTumeur, ttp, rcbv, mtt;
     @FXML
-    private TextField rcbf, lac, idTechnicien, naa_cho, cho_cr, lip_cr, naa_cr;
+    private TextField rcbf, lac, naa_cho, cho_cr, lip_cr, naa_cr;
     
     //*************************Partie Connexion à la bdd************************
     // connexion à la base de données
@@ -63,6 +63,8 @@ public class AccueilTechnicienController implements Initializable {
     
     //Patient séléctionné
     private Patient aPatient;
+    //id du technicien connecté
+    private Integer idtech;
     
     /**
      * Initializes the controller class.
@@ -99,6 +101,15 @@ public class AccueilTechnicienController implements Initializable {
         
         gridpane.setVisible(false);
     }   
+    
+    /** 
+     * intiData() permet de récuperer l'Id du technicien qui s'est connecté
+     * @param thisIdtech 
+     */
+    public void initData(Integer thisIdtech){
+        idtech = thisIdtech;
+        System.out.println(idtech);
+    }
     
     /**
      * recuperationPatients() est appelé par l'initialiseur de la calsse.
@@ -137,36 +148,24 @@ public class AccueilTechnicienController implements Initializable {
     public void handleRechercher(){
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
-        String requete = "select * from Patient;";
-        
-        try{
+        String requete = "select * from Patient";
+        try {
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()) {
-                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOMPATIENT"), result.getString("NOMPATIENT"), result.getInt("AGEPATIENT"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXEPATIENT").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
-                if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText())) {
+                if(patient.getFirstName().toUpperCase().contains(motcle.getText().toUpperCase()) || patient.getLastName().toUpperCase().contains(motcle.getText().toUpperCase())) {
                     data.add(patient);
                 }
             }
-            System.out.println("Liste remplie par la bdd");
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
         }
         catch(NullPointerException e){
             System.out.println(e);
-            System.out.println("Liste non remplie par la bdd");
-        }
-        
-        //debut test
-        patient = new Patient(1,1,"uvjb","iugig",45,false,true,'H',2);
-        if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText())) {
-            data.add(patient);
-        }
-        //fin test
-        
+        }        
         patientTable.setItems(data);
     }
     
@@ -232,9 +231,6 @@ public class AccueilTechnicienController implements Initializable {
         if (lac.getText() == null || lac.getText().length() == 0) {
             errorMessage += "Lac invalide !\n";
         }
-        if(idTechnicien.getText() == null || idTechnicien.getText().length() == 0){
-            errorMessage += "ID Médecin invalide !\n";
-        }
         if (naa_cho.getText() == null || naa_cho.getText().length() == 0) {
             errorMessage += "NAA/Cho invalide !\n";
         }
@@ -275,7 +271,7 @@ public class AccueilTechnicienController implements Initializable {
         if (isInputExamenValid()) {
             String requeteAjout = "Insert into Examen (idMachine, idPatient, idTechnicien, dateExam,"
                    + " volCrane, valMaxAxeCrane, volTumeur, Cho_Cr, Naa_Cr, Naa_Cho, lip_cr, mtt,"
-                   + " ttp, rcbv, rcbf, lac) values ("+idMachine.getText()+","+aPatient.getId()+","+idTechnicien.getText()+",TO_DATE('"+dateExamen.getValue()+"','YYYY-MM-DD'),"
+                   + " ttp, rcbv, rcbf, lac) values ("+idMachine.getText()+","+aPatient.getId()+","+idtech+",TO_DATE('"+dateExamen.getValue()+"','YYYY-MM-DD'),"
                    + volCrane.getText()+","+axeCrane.getText()+","+volTumeur.getText()+","+cho_cr.getText()+","+naa_cr.getText()+","
                    + naa_cho.getText()+","+lip_cr.getText()+","+mtt.getText()+","+ttp.getText()+","+rcbv.getText()+","+rcbf.getText()+","+lac.getText()+")";
             try{

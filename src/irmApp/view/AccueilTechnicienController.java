@@ -1,5 +1,6 @@
 package irmApp.view;
 
+import irmApp.MainApp;
 import irmApp.model.Patient;
 import java.net.URL;
 import java.sql.*;
@@ -13,6 +14,11 @@ import javafx.stage.Stage;
 import irmApp.database.ConnexionOracle;
 import java.io.IOException;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javax.swing.JOptionPane;
 
@@ -117,9 +123,21 @@ public class AccueilTechnicienController implements Initializable {
      * @param event 
      */
     @FXML
-    private void handleDeconnexion(ActionEvent event){
-        
-    }
+    private void handleDeconnexion(ActionEvent event) throws IOException{
+ 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setTitle("IRM Care");
+        window.getIcons().add(new Image("file:ressources/logo.jpg"));
+        window.setScene(tableViewScene);
+        window.show();               
+    } 
     
     
     /**

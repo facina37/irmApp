@@ -8,90 +8,53 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 
-<TabPane fx:id="tabpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilMedecinController">
+<TabPane fx:id="tabpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@theme.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmApp.view.AccueilTechnicienController">
         <tabs>
-          <Tab text="Ajout prévisite">
-            <content>
-              <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                         <Button layoutX="674.0" layoutY="14.0" mnemonicParsing="false" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
-                            <graphic>
-                              <ImageView fx:id="img" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                            </graphic>
-                          </Button>
-                        <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
-                          <columns>
-                            <TableColumn fx:id="idColumn" text="ID" />
-                            <TableColumn fx:id="groupeColumn" text="Groupe" />
-                              <TableColumn fx:id="lastNameColumn" text="Nom" />
-                              <TableColumn fx:id="firstNameColumn" text="Prénom" />
-                              <TableColumn fx:id="ageColumn" text="Age" />
-                              <TableColumn fx:id="statutColumn" text="Statut" />
-                              <TableColumn fx:id="sexeColumn" text="Sexe" />
-                              <TableColumn fx:id="gradeColumn" text="Grade" />
-                          </columns>
-                        </TableView>
-                        <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font name="System Bold" size="30.0" />
-                           </font>
-                        </Label>
-                        <Button defaultButton="true" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
-                        <Button alignment="BOTTOM_CENTER" layoutX="426.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font></Button>
-                        <TextField fx:id="motclePatient" layoutX="653.0" layoutY="16.0" prefHeight="30.0" prefWidth="228.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="70.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></TextField>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Vérification examens">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="36.0" layoutY="14.0" text="Liste des examens à vérifier" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font name="System Bold" size="30.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font></Button>
-                        <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
-                          <columns>
-                            <TableColumn fx:id="idExamColumn" text="ID examen" />
-                            <TableColumn fx:id="dateColumn" text="Date" />
-                              <TableColumn fx:id="nomColumn" text="Nom du patient" />
-                              <TableColumn fx:id="prenomColumn" text="Prénom du patient" />
-                          </columns>
-                        </TableView>
-                        <Button defaultButton="true" layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
-                        <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" prefHeight="30.0" prefWidth="230.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font></TextField>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Tableau de bord">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
+            <Tab text="Patients">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                       <children>
+                          <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
+                            <columns>
+                              <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
+                              <TableColumn fx:id="groupeColumn" prefWidth="74.0" text="Groupe" />
+                              <TableColumn fx:id="lastNameColumn" prefWidth="215.0" text="Nom" />
+                              <TableColumn fx:id="firstNameColumn" prefWidth="220.0" text="Prénom" />
+                              <TableColumn fx:id="ageColumn" prefWidth="84.0" text="Age" />
+                              <TableColumn fx:id="statutColumn" prefWidth="131.0" text="Statut" />
+                              <TableColumn fx:id="sexeColumn" prefWidth="93.0" text="Sexe" />
+                              <TableColumn fx:id="gradeColumn" prefWidth="75.0" text="Grade" />
+                            </columns>
+                          </TableView>
+                          <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                             <font>
+                                <Font name="System Bold" size="30.0" />
+                             </font>
+                          </Label>
+                          <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="249.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0">
+                             <font>
+                                <Font size="14.0" />
+                             </font></TextField>
+                          <Button defaultButton="true" layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="70.0">
+                             <font>
+                                <Font size="14.0" />
+                             </font></Button>
+                          <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjout" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
+                             <font>
+                                <Font name="System Bold" size="14.0" />
+                             </font></Button>
+                            <Button layoutX="852.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                               <font>
+                                  <Font name="System Bold" size="14.0" />
+                               </font>
+                            </Button>
+                       </children></AnchorPane>
+              </content>
             </Tab>
             <Tab text="Aide">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
             </Tab>
-        </tabs>
-      </TabPane>
+          </tabs>
+        </TabPane>

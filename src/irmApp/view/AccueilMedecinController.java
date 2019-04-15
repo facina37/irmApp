@@ -200,19 +200,19 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException{
  
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
-                Parent tableViewParent = loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
+        Parent tableViewParent = loader.load();
 
-                Scene tableViewScene = new Scene(tableViewParent);
+        Scene tableViewScene = new Scene(tableViewParent);
 
-                //This line gets the Stage information
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setTitle("IRM Care");
-                window.getIcons().add(new Image("file:ressources/logo.jpg"));
-                window.setScene(tableViewScene);
-                window.show();               
-            }            
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setTitle("IRM Care");
+        window.getIcons().add(new Image("file:ressources/logo.jpg"));
+        window.setScene(tableViewScene);
+        window.show();               
+    }            
 
     
     /**

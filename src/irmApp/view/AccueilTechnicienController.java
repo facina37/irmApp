@@ -112,6 +112,29 @@ public class AccueilTechnicienController implements Initializable {
     }
     
     /**
+     * handleDeconnexion() permet de se déconnecter
+     * 
+     * @param event 
+     */
+    @FXML
+    private void handleDeconnexion(ActionEvent event){
+        
+    }
+    
+    
+    /**
+     * handleAnnuler() est appelé lorsque le technicien veut annuler l'ajout d'un examen.
+     * Permet de revenir à la page d'accueil médecin.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void handleAnnuler(ActionEvent event){
+        tabpane.setVisible(true);
+        gridpane.setVisible(false);        
+    }
+    
+    /**
      * recuperationPatients() est appelé par l'initialiseur de la calsse.
      * Permet de remplire une liste de patient à partir de la base de données.
      */
@@ -180,6 +203,7 @@ public class AccueilTechnicienController implements Initializable {
     public void handleAjout(ActionEvent event){
         aPatient = patientTable.getSelectionModel().getSelectedItem();    
         if (aPatient != null) {
+            patientTable.setItems(recuperationPatients());
             tabpane.setVisible(false);
             gridpane.setVisible(true);
         } else {

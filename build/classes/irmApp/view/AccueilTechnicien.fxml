@@ -37,7 +37,7 @@
                              <font>
                                 <Font size="14.0" />
                              </font></TextField>
-                          <Button layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0">
+                          <Button defaultButton="true" layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0">
                              <font>
                                 <Font size="14.0" />
                              </font></Button>
@@ -88,28 +88,32 @@
                           <Font name="System Bold" size="24.0" />
                   </font>
                   </Label>
-                  <TextField fx:id="mtt" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                  <TextField fx:id="volCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextField fx:id="ttp" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                  <TextField fx:id="axeCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <TextField fx:id="naa_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                  <TextField fx:id="rcbv" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <TextField fx:id="idMachine" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <TextField fx:id="volTumeur" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
                   <DatePicker fx:id="dateExamen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="rcbf" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                  <TextField fx:id="lac" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <TextField fx:id="idMachine" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="volCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="axeCrane" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <TextField fx:id="volTumeur" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
                   <TextField fx:id="cho_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="naa_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <TextField fx:id="naa_cho" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
                   <TextField fx:id="lip_cr" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <TextField fx:id="naa_cho" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                  <TextField fx:id="lac" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <TextField fx:id="rcbv" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <TextField fx:id="rcbf" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                  <TextField fx:id="mtt" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                  <TextField fx:id="ttp" maxHeight="25.0" maxWidth="93.0" prefHeight="25.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="10">
                   <GridPane.margin>
                   </GridPane.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                 <Button mnemonicParsing="false" onAction="#handleAnnuler" text="Annuler" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER">
+                    <font>
+                       <Font name="System Bold" size="18.0" />
+                    </font>
+                 </Button>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleAjoutExamen" text="Ajouter" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="11">
                   <font>
                           <Font name="System Bold" size="18.0" />
                   </font></Button>
-                  <TextField fx:id="idTechnicien" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="138.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                   <Label text="Date de l'examen :" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <font>
                           <Font size="14.0" />
@@ -156,11 +160,6 @@
                   </font>
                   </Label>
                   <Label text="Lac :" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                  <font>
-                          <Font size="14.0" />
-                  </font>
-                  </Label>
-                  <Label text="ID du technicien :" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <font>
                           <Font size="14.0" />
                   </font>

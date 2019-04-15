@@ -1,5 +1,6 @@
 package irmApp.view;
 
+import irmApp.MainApp;
 import irmApp.database.ConnexionOracle;
 import irmApp.model.Examen;
 import irmApp.model.Patient;
@@ -11,7 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -71,7 +77,7 @@ public class AccueilMedecinController implements Initializable {
     @FXML
     private DatePicker dateVisite;
     @FXML
-    private TextField idMedecin, poids, freqCardiaque;
+    private TextField poids, freqCardiaque;
     @FXML
     private ComboBox<String> typeLot;//Choix entre DiOrZen ou placebo
     @FXML
@@ -109,7 +115,6 @@ public class AccueilMedecinController implements Initializable {
     //partie choix du grade
     @FXML
     private ComboBox grade;
-    int gr;
     @FXML
     private Button valideGrade;
     @FXML
@@ -138,7 +143,7 @@ public class AccueilMedecinController implements Initializable {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {        
         //partie patient
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         groupeColumn.setCellValueFactory(cellData -> cellData.getValue().groupeProperty());
@@ -186,6 +191,29 @@ public class AccueilMedecinController implements Initializable {
         idmed = thisIdmed;
         System.out.println(idmed);
     }
+    
+    /**
+     * handleDeconnexion() permet de se déconnecter
+     * 
+     * @param event 
+     */
+    @FXML
+    private void handleDeconnexion(ActionEvent event) throws IOException{
+ 
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
+                Parent tableViewParent = loader.load();
+
+                Scene tableViewScene = new Scene(tableViewParent);
+
+                //This line gets the Stage information
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setTitle("IRM Care");
+                window.getIcons().add(new Image("file:ressources/logo.jpg"));
+                window.setScene(tableViewScene);
+                window.show();               
+            }            
+
     
     /**
     *  recuperationPatients() permet d'afficher la liste de tous les patients dans le TableView.
@@ -381,7 +409,6 @@ public class AccueilMedecinController implements Initializable {
         tension.setDisable(false);
         leucocytes.setDisable(false);
         hemoglobine.setDisable(false);
-        idMedecin.setDisable(false);
         ajoutVisite.setDisable(false);
         
         raisonPrise.setDisable(true);
@@ -396,7 +423,7 @@ public class AccueilMedecinController implements Initializable {
      * @throws IOException 
      */
     @FXML
-    private void handleAjoutPrevisite(ActionEvent event) throws IOException {
+    private void handleAjoutPrevisite(ActionEvent event){
         if (isInputVisiteValid()) {
             AjoutPrevisite(event);
             messageSucces.setText("Vous avez ajouté une prévisite à la base de données");            
@@ -427,7 +454,6 @@ public class AccueilMedecinController implements Initializable {
             tension.setDisable(true);
             leucocytes.setDisable(true);
             hemoglobine.setDisable(true);
-            idMedecin.setDisable(true);
             ajoutVisite.setDisable(true);
             
             raisonPrise.setDisable(false);
@@ -602,9 +628,6 @@ public class AccueilMedecinController implements Initializable {
         if (hemoglobine.getText() == null || hemoglobine.getText().length() == 0) {
             errorMessage += "Taux d'hémoglobine invalide !\n";
         }
-        if (idMedecin.getText() == null || idMedecin.getText().length() == 0) {
-            errorMessage += "ID médecin invalide !\n";
-        }
         if (errorMessage.length() == 0) {
             return true;
         } else {
@@ -684,6 +707,17 @@ public class AccueilMedecinController implements Initializable {
     }
     
     /**
+    * handleAnnuler() est appelé lorsque le médecin ne veux plus vérifier un examen.
+    * Permet de revenir à la page d'accueil médecin.
+    */
+    @FXML
+    private void handleAnnuler(ActionEvent event) throws IOException {
+        tabpane.setVisible(true);
+        gridpaneExamen.setVisible(false);        
+    }
+    
+    
+    /**
      * handleValideErreur() permet de valider la décision du médecin sur l'examen qui a une erreur d'IRM 
      * et de revenir sur la page d'accueil du médecin.
      * 
@@ -721,6 +755,7 @@ public class AccueilMedecinController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
             }
         }
+        examenTable.setItems(recuperationExamens());
         tabpane.setVisible(true);
         gridpaneExamen.setVisible(false);   
     }
@@ -771,6 +806,7 @@ public class AccueilMedecinController implements Initializable {
             try {
                 //petit pop up
                 JOptionPane.showMessageDialog(null, "Choix enregistré avec succès.");
+                examenTable.setItems(recuperationExamens());
                 tabpane.setVisible(true);
                 gridpaneExamen.setVisible(false);
                 stmt = maconnection.ObtenirConnection().createStatement();

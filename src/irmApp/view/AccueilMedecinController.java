@@ -17,7 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -198,7 +198,7 @@ public class AccueilMedecinController implements Initializable {
      * @param event 
      */
     @FXML
-    private void handleDeconnexion(ActionEvent event) throws IOException{
+    private void setDeco(MouseEvent event) throws IOException{
  
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
@@ -726,8 +726,10 @@ public class AccueilMedecinController implements Initializable {
      */
     @FXML
     private void handleValideErreur(ActionEvent event) throws IOException {        
-        if(isErrorChoiceValid()){
-            if (refaire.isSelected()){
+        if (refaire.isSelected() == false && suppression.isSelected() == false) {
+            JOptionPane.showMessageDialog(null, "Veuillez faire un choix.");
+        }else{
+            if (refaire.isSelected()){ 
                 //==> on doit supprimer les données de cet examen
                 String requeteSuppr = "delete from examen where idexamen = "+examen.getId()+"";
                 try {
@@ -739,53 +741,23 @@ public class AccueilMedecinController implements Initializable {
                     System.out.println("Erreur, l'examen n'a pas été supprimé");
                 }
                 //==> on doit en reprogrammer un dans deux jours
-                String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+aPatient.getId()+"";
-                try{
-                    stmt = maconnection.ObtenirConnection().createStatement();
-                    stmt.executeQuery(requeteAgenda);
-                    System.out.println("Un nouvel examen a été programmé dans 2j");
-                }
-                catch(SQLException e) {
-                    System.out.println("Un nouvel examen n'a pas pu etre programmé");
-                }
             }
             if (suppression.isSelected()){
-                //==>on supprime l'avant dernier examen effectué par ce patient
-                //petit pop up
-                JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
+                //==> on doit supprimer les données de cet examen
+                String requeteSuppr = "delete from examen where idexamen = "+examen.getId()+"";
+                try {
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    stmt.executeQuery(requeteSuppr);
+                    System.out.println("L'examen a bien été supprimé");
+                }
+                catch(SQLException e) {
+                    System.out.println("Erreur, l'examen n'a pas été supprimé");
+                }
             }
-        }
-        examenTable.setItems(recuperationExamens());
-        tabpane.setVisible(true);
-        gridpaneExamen.setVisible(false);   
-    }
-    
-    /**
-     * isErrorChoiceValid() permet de vérifier l'action du médecin lors de la 
-     * validation de sa décision.
-     * 
-     * @return boolean
-     */
-    private boolean isErrorChoiceValid() {
-        String errorMessage = "";
-        
-        if (refaire.isSelected() == false && suppression.isSelected() == false) {
-            errorMessage += "Vous devez faire un choix avant de valider";
-        }
-        if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Show the error message.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Attention !");
-            alert.setHeaderText("Veuillez corriger.");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
-
-            return false;
-        }
+            examenTable.setItems(recuperationExamens());
+            tabpane.setVisible(true);
+            gridpaneExamen.setVisible(false);   
+        }        
     }
     
     /**
@@ -802,7 +774,6 @@ public class AccueilMedecinController implements Initializable {
             JOptionPane.showMessageDialog(null, "Veuillez faire un choix.");
         }else {
             String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+", idmed = "+idmed+" where idexamen = "+examen.getId()+"";
-            System.out.println(requeteGrade);
             try {
                 //petit pop up
                 JOptionPane.showMessageDialog(null, "Choix enregistré avec succès.");
@@ -841,7 +812,7 @@ public class AccueilMedecinController implements Initializable {
                 cho_cr.setText("Cho/Cr : "+result.getString("CHO_CR"));
                 lip_cr.setText("Lip/Cr : "+result.getString("LIP_CR"));
                 naa_cr.setText("Naa/Cr : "+result.getString("NAA_CR"));
-                valide = result.getBoolean("VALIDE");
+                valide = result.getBoolean("ERREURANNA");
                 //Affiche les bons champs selon la vlidité de l'examen
                 gestionErreurs();
                // idPatient = result.getInt("IDPATIENT");
@@ -861,7 +832,7 @@ public class AccueilMedecinController implements Initializable {
      */
     public void gestionErreurs(){
         if(valide == false){
-            messageErreur.setText("L'IRM a présenté d'erreurs anatomiques");
+            messageErreur.setText("L'IRM a présenté des erreurs anatomiques");
             refaire.setVisible(true);
             suppression.setVisible(true);
             valideErreur.setVisible(true);

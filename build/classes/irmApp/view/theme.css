@@ -26,9 +26,12 @@ bleu très pale : #E0F2F4
     -fx-font-family: sans-serif;    
 }
 
-.image {
-    -fx-background-image: url("bg.png");
-}
+.cross { 
+    -fx-image: url(deco.png); 
+} 
+.cross:hover { 
+    -fx-image: url(deco.jpg); 
+} 
 
 .label-bright {
     -fx-font-size: 20pt;

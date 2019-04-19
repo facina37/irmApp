@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
@@ -16,7 +18,26 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                        <children>
-                          <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
+                           <AnchorPane layoutX="-8.0" prefHeight="400.0" prefWidth="70.0" style="-fx-background-color: #f2f6f7; -fx-border-color: #e2e2e2" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                   <ImageView fx:id="deco" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#setDeco" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="30.0">
+                                    <image>
+                                       <Image url="@deco.png" />
+                                    </image>
+                                    <effect>
+                                        <Lighting>
+                                           <bumpInput>
+                                              <Shadow />
+                                           </bumpInput>
+                                           <light>
+                                              <Light.Distant />
+                                           </light>
+                                        </Lighting>
+                                     </effect>
+                                 </ImageView>
+                                </children>
+                             </AnchorPane>
+                          <TableView fx:id="patientTable" layoutX="28.0" layoutY="58.0" prefHeight="405.0" prefWidth="719.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
                             <columns>
                               <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
                               <TableColumn fx:id="groupeColumn" prefWidth="74.0" text="Groupe" />
@@ -28,28 +49,23 @@
                               <TableColumn fx:id="gradeColumn" prefWidth="75.0" text="Grade" />
                             </columns>
                           </TableView>
-                          <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                          <Label layoutX="28.0" layoutY="15.0" text="Liste des patients" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="15.0">
                              <font>
                                 <Font name="System Bold" size="30.0" />
                              </font>
                           </Label>
-                          <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="249.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0">
+                          <TextField fx:id="motcle" layoutX="522.0" layoutY="16.0" prefHeight="30.0" prefWidth="249.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="70.0">
                              <font>
                                 <Font size="14.0" />
                              </font></TextField>
-                          <Button defaultButton="true" layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="70.0">
+                          <Button defaultButton="true" layoutX="671.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0">
                              <font>
                                 <Font size="14.0" />
                              </font></Button>
-                          <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjout" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="430.0" AnchorPane.rightAnchor="430.0">
+                          <Button alignment="CENTER" layoutX="439.0" layoutY="727.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAjout" prefWidth="50.0" text="Ajouter un IRM" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="410.0">
                              <font>
                                 <Font name="System Bold" size="14.0" />
                              </font></Button>
-                            <Button layoutX="852.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
-                               <font>
-                                  <Font name="System Bold" size="14.0" />
-                               </font>
-                            </Button>
                        </children></AnchorPane>
               </content>
             </Tab>

@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javax.swing.JOptionPane;
 
@@ -123,7 +124,7 @@ public class AccueilTechnicienController implements Initializable {
      * @param event 
      */
     @FXML
-    private void handleDeconnexion(ActionEvent event) throws IOException{
+    private void setDeco(MouseEvent event) throws IOException{
  
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainApp.class.getResource("view/Connexion.fxml"));
@@ -138,7 +139,6 @@ public class AccueilTechnicienController implements Initializable {
         window.setScene(tableViewScene);
         window.show();               
     } 
-    
     
     /**
      * handleAnnuler() est appelé lorsque le technicien veut annuler l'ajout d'un examen.

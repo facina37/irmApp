@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -14,13 +15,30 @@
          <tabs>
           <Tab text="Ajout prévisite">
             <content>
+              
               <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font></Button>
-                        <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
+                  <children>
+                     <AnchorPane layoutX="-8.0" prefHeight="400.0" prefWidth="70.0" style="-fx-background-color: #f2f6f7; -fx-border-color: #e2e2e2" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                           <ImageView fx:id="deco" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#setDeco" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="30.0">
+                            <image>
+                               <Image url="@deco.png" />
+                            </image>
+                            <effect>
+                                <Lighting>
+                                   <bumpInput>
+                                      <Shadow />
+                                   </bumpInput>
+                                   <light>
+                                      <Light.Distant />
+                                   </light>
+                                </Lighting>
+                             </effect>
+                         </ImageView>
+                        </children>
+                     </AnchorPane>
+
+                        <TableView fx:id="patientTable" layoutX="30.0" layoutY="54.0" prefHeight="416.0" prefWidth="720.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
                           <columns>
                             <TableColumn fx:id="idColumn" text="ID" />
                             <TableColumn fx:id="groupeColumn" text="Groupe" />
@@ -32,20 +50,20 @@
                               <TableColumn fx:id="gradeColumn" text="Grade" />
                           </columns>
                         </TableView>
-                        <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                        <Label layoutX="30.0" layoutY="13.0" text="Liste des patients" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="15.0">
                            <font>
                               <Font name="System Bold" size="30.0" />
                            </font>
                         </Label>
-                        <Button defaultButton="true" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" AnchorPane.leftAnchor="258.0" AnchorPane.topAnchor="70.0">
+                        <Button defaultButton="true" layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRechercherPatients" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
-                        <Button alignment="BOTTOM_CENTER" layoutX="426.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
+                        <Button alignment="BOTTOM_CENTER" layoutX="426.0" mnemonicParsing="false" onAction="#handleAjoutVisite" text="Ajouter une prévisite" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="390.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <TextField fx:id="motclePatient" layoutX="653.0" layoutY="16.0" prefHeight="30.0" prefWidth="228.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0">
+                        <TextField fx:id="motclePatient" layoutX="653.0" layoutY="16.0" prefHeight="30.0" prefWidth="228.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="70.0">
                            <font>
                               <Font size="14.0" />
                            </font></TextField>
@@ -56,16 +74,35 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="36.0" layoutY="14.0" text="Liste des examens à vérifier" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="15.0">
+                        <AnchorPane layoutX="-8.0" prefHeight="400.0" prefWidth="70.0" style="-fx-background-color: #f2f6f7; -fx-border-color: #e2e2e2" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                               <ImageView fx:id="decon" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#setDeco" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="30.0">
+                                <image>
+                                   <Image url="@deco.png" />
+                                </image>
+                                <effect>
+                                    <Lighting>
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                             </ImageView>
+                            </children>
+                         </AnchorPane>
+                        <Label layoutX="36.0" layoutY="14.0" text="Liste des examens à vérifier" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="15.0">
                            <font>
                               <Font name="System Bold" size="30.0" />
                            </font>
                         </Label>
-                        <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="420.0">
+                        <Button layoutX="427.0" layoutY="727.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Vérifier un examen" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="390.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
+                        <TableView fx:id="examenTable" layoutX="36.0" layoutY="53.0" prefHeight="407.0" prefWidth="700.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
                           <columns>
                             <TableColumn fx:id="idExamColumn" text="ID examen" />
                             <TableColumn fx:id="dateColumn" text="Date" />
@@ -73,32 +110,17 @@
                               <TableColumn fx:id="prenomColumn" text="Prénom du patient" />
                           </columns>
                         </TableView>
-                        <Button defaultButton="true" layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.leftAnchor="259.0" AnchorPane.topAnchor="70.0">
+                        <Button defaultButton="true" layoutX="660.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercherExamens" text="Rechercher" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
-                        <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" prefHeight="30.0" prefWidth="230.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0">
+                        <TextField fx:id="motcleExamen" layoutX="511.0" layoutY="15.0" prefHeight="30.0" prefWidth="230.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="70.0">
                            <font>
                               <Font size="14.0" />
                            </font></TextField>
-                  <Button layoutX="715.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Tableau de bord">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
-            <Tab text="Aide">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
 
